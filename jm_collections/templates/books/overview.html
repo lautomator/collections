@@ -1,0 +1,29 @@
+{% extends "books/base.html" %}
+
+{% block title %}Overview{% endblock %}
+
+{% block page %}
+    <!--// Details from the publication //-->
+    <h1>Publications Overview</h1>
+
+    <!--// Render all of the titles from the table //-->
+    <table>
+        {% for item in all_items %}
+        <tr>
+            <td class="pub_id">{{ item.id }}</td>
+            <td class="v_rule">&ensp;</td>
+            <td class="pub_item">
+                <a href="{% url 'books:details' item.id %}">{{ item.title }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">&nbsp;</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td class="button"><a href="{% url 'books:add' %}">add a publication</a></td>
+        </tr>
+    </table>
+{% endblock %}

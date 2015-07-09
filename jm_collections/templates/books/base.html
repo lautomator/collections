@@ -1,0 +1,52 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'books/base-styles.css' %}" />
+
+    <title >{% block title %}Publications{% endblock %}</title>
+</head>
+
+<body>
+    <h1 class="page_title">Publications</h1>
+    <!--// main navigation //-->
+    <header>
+        {% block header %}
+            <p class="header_txt">
+            Apps:
+            Publications |
+            <a href="{% url 'reader:index' %}" class="header_txt">
+                Reader</a> |
+            <a href="{% url 'info:about' %}" 
+                class="header_txt">
+                About</a>
+            </p>
+        {% endblock %}
+    </header>
+    <!--// local navigation //-->
+    <nav>
+        <p>
+            <a href="{% url 'books:index' %}">home</a>
+            &nbsp;|&nbsp;
+            <a href="{% url 'books:overview' %}">overview</a>
+        </p>
+    </nav>
+
+    <!--// page begins //-->
+    <div id="page">
+
+        {% block page %}
+        <!--// content //-->
+        {% endblock %}
+
+    </div><!--// page ends //-->
+    <!--// footer begins //-->
+    <footer>
+        {% block footer %}
+        <!--// auto date to be added //-->
+        {% endblock %}
+    </footer><!--// footer ends //-->
+</body>
+</html>

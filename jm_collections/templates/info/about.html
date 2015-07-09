@@ -1,0 +1,39 @@
+{% extends "info/base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block mast %}About{% endblock %}
+
+{% block page %}
+    <!--// About //-->
+    <h1>About</h1>
+
+    <p>This is a static page and does not query any database table.
+    This pages is here to practice using the <strong>generic template
+    view</strong>. Here is some potentially useful information about
+    the site:</p>
+
+    <h2>Apps</h2>
+    <ul>
+        <li><u>Publications</u>
+            <ul>
+                <li><strong>home</strong> displays the most recent
+                    entries (3).</li>
+                <li><strong>overview</strong> displays every entry.</li>
+            </ul>
+        </li>
+        <li><u>Reader</u>
+            <ul>
+                <li><strong>home</strong> displays the most recent
+                    entries (3).</li>
+                <li><strong>overview</strong> displays a capsule
+                    version of every entry.</li>
+            </ul>
+        </li>
+        <li><u>About</u>
+            <ul>
+                <li>displays this page.</li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

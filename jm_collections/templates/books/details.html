@@ -1,0 +1,16 @@
+{% extends "books/base.html" %}
+
+{% block title %}Details{% endblock %}
+
+{% block page %}
+    <!--// Details from the publication //-->
+    <h1>Publication Details</h1>
+    <ul>
+        <li>Title:<strong> {{ object.title }}</strong></li>
+        <li>Author:<strong> {{ object.author }}</strong></li>
+        <li>Publication Date: {{ object.pub_date }}</li>
+        <li>Category: {{ object.category }}</li>
+        <li class="button"><a href="{% url 'books:edit' object.id %}">
+        	edit</a></li>
+    </ul>
+{% endblock %}

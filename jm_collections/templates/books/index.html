@@ -1,0 +1,36 @@
+{% extends "books/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block page %}
+    <!--// Recent Titles //-->
+    <h1>Recent Titles</h1>
+    {% if recent_entries %}
+        <ul>
+        {% for pub in recent_entries %}
+            <!--//  books:title (books is the namespace:title is url)
+                    See urls.py for project (not app) //-->
+            <li><a href="{% url 'books:details' pub.id %}">
+                {{ pub.title }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No titles are available.</p>
+    {% endif %}
+
+    <!--// Recent Authors //-->
+    <h1>Recent Authors</h1>
+    {% if recent_entries %}
+        <ul>
+        {% for writer in recent_entries %}
+            <!--// books:author (books is the namespace:author is url) //-->
+            <li><a href="{% url 'books:details' writer.id %}">
+                {{ writer.author }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No authors are available.</p>
+    {% endif %}
+{% endblock %}

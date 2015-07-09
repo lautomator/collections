@@ -1,0 +1,22 @@
+{% extends "reader/base.html" %}
+
+{% block title %}Add{% endblock %}
+
+{% block page %}
+    <!--// Details from the publication //-->
+    <h1>Add:</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <!--// update //-->
+        <div>
+            <input type="submit" value="add entry" /><br>
+            <!--// cancel //-->
+            <a href="{% url 'reader:index' %}">
+            <input type="button" value="cancel" /><a><br>
+        </div>
+    </form>
+{% endblock %}

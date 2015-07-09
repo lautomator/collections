@@ -1,0 +1,24 @@
+{% extends "reader/base.html" %}
+
+{% load humanize %}
+
+{% block title %}Home{% endblock %}
+
+{% block page %}
+    <!--// Recent Reader Entries //-->
+    <h1>Recent Entries</h1>
+    {% if recent_entries %}
+        <ul>
+        {% for entry in recent_entries %}
+            <li>{{ entry.reader_date|naturalday}} | author:
+                {{ entry.reader_author }}</li>
+            <li class="reader_title">{{ entry.reader_title }}</li>
+            <li>{{ entry.reader_entry }}</li>
+            <li class="reader_entry"></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No data available: <a href="{% url 'reader:add' %}">
+            add an entry</a></p>
+    {% endif %}
+{% endblock %}
