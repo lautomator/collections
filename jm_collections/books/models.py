@@ -4,7 +4,7 @@ from django.db import models
 class Publication(models.Model):
     title = models.CharField(max_length=80)
     author = models.CharField(max_length=80)
-    pub_date = models.IntegerField(max_length=4)  # Format ex: 1970
+    pub_date = models.IntegerField()  # Format ex: 1970
     # The categories list (genres):
     CATEGORIES = (
         ('OTH', 'Other'),
