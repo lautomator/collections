@@ -18,7 +18,6 @@
         {% endfor %}
         </ul>
     {% else %}
-        <p>No data available: <a href="{% url 'reader:add' %}">
-            add an entry</a></p>
+        <p>No data available:<br><span class="button"><a href="{% url 'reader:add' %}">add an entry</a></span></p>
     {% endif %}
 {% endblock %}
