@@ -4,7 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns(
-    '',
+    url(r'^signup/', include('signup.urls', namespace="signup")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^books/', include('books.urls', namespace="books")),
     url(r'^reader/', include('reader.urls', namespace="reader")),
