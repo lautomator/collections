@@ -16,27 +16,27 @@
 
     </style>
 
-    <title >Login</title>
+    <title >Signup</title>
 </head>
 
 <body>
-    <h1 class="page_title">Login</h1>
+    <h1 class="page_title">Signup</h1>
     <!-- main navigation -->
     <header>
         <p class="header_txt">
         Apps:
-        <a href="{% url 'info:about' %}"
+        <a href="{% url 'info:about' %}" 
             class="header_txt">
             About</a>
         </p>
         <!-- FPO -->
-        <p>New users <a href="{% url 'signup:signup' %}">signup</a>.</p>
+        <p>Existing users <a href="{% url 'signup:index' %}">login</a>.</p>
         <!-- FPO -->
     </header>
 
     <!-- page begins -->
     <div id="page">
-        <!-- the login form -->
+        <!-- the signup form -->
         <form method="post">
               <table>
                     <tr>
@@ -56,10 +56,25 @@
                     </tr>
 
                     <tr>
+                        <td><label>Verify Password&nbsp;&nbsp;</label></td>
+                        <td>
+                            <input type="password" name="verify" value="{{ verify }}">
+                            <p>{{ err_verify }}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Email (optional)&nbsp;&nbsp;</label></td>
+                        <td>
+                            <input type="text" name="email" value="{{ email }}">
+                            <p>{{ err_email }}</p>
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="2"><input type="submit" value="submit"></td>
                     </tr>
               </table>
-        </form><!-- login form ends -->
+        </form><!-- signup form ends -->
     </div><!-- page ends -->
 </body>
 </html>

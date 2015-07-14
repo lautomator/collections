@@ -1,9 +1,11 @@
 from django.conf.urls import patterns, url
 
-from info import views
+from signup import views
 
 urlpatterns = patterns(
     '',
-    # /info/about/
-    url(r'^signup/$', views.index, name='signup'),
+    # /
+    url(r'^$', views.login, name='index'),
+    # /signup/
+    url(r'^signup/$', views.signup, name='signup'),
 )
