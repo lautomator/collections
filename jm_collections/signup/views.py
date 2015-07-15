@@ -2,11 +2,7 @@ import re
 
 from django.shortcuts import render
 from django.shortcuts import redirect
-# from django.http import HttpResponse
-# from django.http import HttpResponseRedirect
-# from django.views.decorators.http import require_http_methods
-# from signup.forms import SignupForm
-# from django.views.generic import CreateView
+from django.contrib.auth import authenticate
 # from django.contrib.auth.models import User
 
 
@@ -53,81 +49,50 @@ def check_signup(u, p, v, e):
         return params
 
 
+# check for an existing user
+def get_user(u, p):
+    user = authenticate(username=u, password=p)
+    if user is not None:
+        if user.is_active:
+            return True
+
+
 def signup(request):
     username = request.POST.get("username", '')
     password = request.POST.get("password", '')
     verify = request.POST.get("verify", '')
     email = request.POST.get("email", '')
-    context = {}
-    have_error = False
 
-    error = check_signup(username, password, verify, email)
+    if username or password or email or verify:
+        error = check_signup(username, password, verify, email)
 
-    if error:
-        context = {
-            'username': username,
-            'password': password,
-            'verify': verify,
-            'email': email
-        }
-        context.update(error)
-        return render(request, 'signup/signup.html', context)
-    else:
-        # check to see if the user exists
-        return redirect('/')
+        set_user = False
+
+        if error:
+            context = {
+                'username': username,
+                'password': password,
+                'verify': verify,
+                'email': email
+            }
+            context.update(error)
+            # has warnings; re-render the page with warnings
+            return render(request, 'signup/signup.html', context)
+        else:
+            # check that the user does not already exist
+            if get_user(username, password):
+                set_user = True
+            else:
+                context = {
+
+                return render(request, 'signup/signup.html', context)
+
+
+
+    return redirect('/')
+
+    return render(request, 'signup/signup.html')
 
 
 def login(request):
     return render(request, 'signup/index.html')
-
-    # if username:
-    #     return HttpResponse('data was entered, do the check, etc...')
-    # else:
-    #     context = {
-    #         'username': username,
-    #         'password': password,
-    #         'verify': verify,
-    #         'email': email,
-    #         # 'err_name': error['err_name'],
-    #         # 'err_password': error['err_password'],
-    #         # 'err_verify': error['err_verify'],
-    #         # 'err_email': error['err_email']
-    #     }
-    #     return render(request, 'signup/signup.html', context)
-
-    # # context = {}
-
-    # # error = check_signup(username, password, verify, email)
-
-    # # if error:
-    # #     return HttpResponse(error)
-    # # else:
-    # #     return HttpResponse('no error')
-
-    # # if error:
-    # #     print error
-    # #     # if error['err_name']:
-    # #     #     context['err_name'] = error['err_name']
-
-    # #     # if error['err_password']:
-    # #     #     context['err_password'] = error['err_password']
-    # #     # elif error['err_verify']:
-    # #     #     context['err_verify'] = error['err_verify']
-
-    # #     # if error['err_email']:
-    # #     #     context['err_email'] = error['err_email']
-
-    #     # context = {
-    #     #     'username': username,
-    #     #     'password': password,
-    #     #     'verify': verify,
-    #     #     'email': email,
-    #     #     # 'err_name': error['err_name'],
-    #     #     # 'err_password': error['err_password'],
-    #     #     # 'err_verify': error['err_verify'],
-    #     #     # 'err_email': error['err_email']
-    #     # }
-    #     # return render(request, 'signup/signup.html', context)
-
-    # # else:
-    # #     return redirect('/books/')

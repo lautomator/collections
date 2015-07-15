@@ -29,64 +29,49 @@
             class="header_txt">
             About</a>
         </p>
-        <!-- FPO -->
         <p>Existing users <a href="{% url 'signup:index' %}">login</a>.</p>
-        <!-- FPO -->
     </header>
 
     <!-- page begins -->
     <div id="page">
 
-<!--         <form action="" method="post">
-            {% csrf_token %}
-
-            {{ form.as_p }}
-
-            <div><input type="submit" value="submit" /></div>
-        </form> -->
-
         <!-- the signup form -->
         <form method="post">
-              <table>
-                    <tr>
-                        <td><label>Username&nbsp;&nbsp;</label></td>
-                        <td>
-                            <input type="text" name="username" value="{{ username }}">
-                            <p>{{ err_name }}</p>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td><label>Password&nbsp;&nbsp;</label></td>
-                        <td>
-                            <input type="password" name="password" value="{{ password }}">
-                            <p>{{ err_password }}</p>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td><label>Verify Password&nbsp;&nbsp;</label></td>
-                        <td>
-                            <input type="password" name="verify" value="{{ verify }}">
-                            <p>{{ err_verify }}</p>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td><label>Email (optional)&nbsp;&nbsp;</label></td>
-                        <td>
-                            <input type="text" name="email" value="{{ email }}">
-                            <p>{{ err_email }}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><input type="submit" value="submit">
-                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token}}"></td>
-                    </tr>
-              </table>
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td><label>Username&nbsp;&nbsp;</label></td>
+                    <td>
+                        <input type="text" name="username" value="{{ username }}">
+                        <p>{{ err_name }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Password&nbsp;&nbsp;</label></td>
+                    <td>
+                        <input type="password" name="password" value="{{ password }}">
+                        <p>{{ err_password }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Verify Password&nbsp;&nbsp;</label></td>
+                    <td>
+                        <input type="password" name="verify" value="{{ verify }}">
+                        <p>{{ err_verify }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Email (optional)&nbsp;&nbsp;</label></td>
+                    <td>
+                        <input type="text" name="email" value="{{ email }}">
+                        <p>{{ err_email }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="submit">
+                </tr>
+            </table>
         </form><!-- signup form ends -->
-
-        <p>{{ username }}<br>{{ password }}<br>{{ verify }}<br>{{ email }}</p>
 
     </div><!-- page ends -->
 </body>
