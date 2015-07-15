@@ -1,6 +1,7 @@
 import re
 
 from django.shortcuts import render
+from django.shortcuts import redirect
 # from django.http import HttpResponseRedirect
 # from django.views.decorators.http import require_http_methods
 # from signup.forms import SignupForm
@@ -14,7 +15,7 @@ _pw_re = re.compile(r'^.{3,20}$')
 _email_re = re.compile(r'^[\S]+@[\S]+\.[\S]+$')
 
 
-# valid username and password checks
+# validate user entries
 def valid_username(s):
     return _user_re.match(s)
 
@@ -31,21 +32,52 @@ def valid_email(s):
     return _email_re.match(s)
 
 
-def login(request):
-    return render(request, 'signup/index.html')
+# data entry check
+def check_signup(u, p, v, e):
+    params = {}
 
+    # run the checks for valid data entry
+    if not valid_username(u):
+        params['err_name'] = "That's not a valid username."
 
-# class Signup(CreateView):
-#     model = User
-#     template_name = 'signup/signup.html'
-#     success_url = '/reader/'
-#     fields = [
-#         'username',
-#         'password',
-#         'verify password',
-#         'email',
-#     ]
+    if not valid_password(p):
+        params['err_password'] = "That's not a valid password."
+    elif p != v:
+        params['err_verify'] = "Passwords do not match."
+
+    if e and not valid_email(e):
+        params['err_email'] = "That's not a valid email."
+
+    return params
 
 
 def signup(request):
-    return render(request, 'signup/signup.html')
+    username = request.POST.get("username", '')
+    password = request.POST.get("password", '')
+    verify = request.POST.get("verify", '')
+    email = request.POST.get("email", '')
+
+    error = check_signup(username, password, verify, email)
+
+
+
+
+    if have_error:
+        context = {
+            "username": username,
+            "password": password,
+            "verify": verify,
+            "email": email,
+            "err_name": err_name,
+            'err_password': err_password,
+            'err_verify': err_verify,
+            'err_email': err_email
+        }
+
+        return render(request, 'signup/signup.html', context)
+    else:
+        return redirect('/books/')
+
+
+def login(request):
+    return render(request, 'signup/index.html')
