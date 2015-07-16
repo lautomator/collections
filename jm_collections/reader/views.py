@@ -1,16 +1,11 @@
-from django.views.generic import ListView
-from django.views.generic import CreateView
+from django.shortcuts import render
+# from django.views.generic import CreateView
 from django.contrib.auth.decorators import login_required
 
 from reader.models import Reader
 
 
-@login_required(login_url='/')
-class IndexView(ListView):
-    template_name = 'reader/index.html'
-    context_object_name = 'recent_entries'
-
-    def get_queryset(self):
+def get_queryset():
         ''' Return the last 5 reader entries. '''
         reader_entries = Reader.objects.order_by('-id')[:5]
         no_of_entries = len(reader_entries)
@@ -21,23 +16,36 @@ class IndexView(ListView):
         return recent_entries
 
 
-# @login_required(login_url='/')
-class OverviewView(ListView):
-    template_name = 'reader/overview.html'
-    context_object_name = 'all_items'
-
-    def get_queryset(self):
-        ''' Return every entry. '''
+def get_queryset_all():
+        ''' Return all reader entries. '''
         return Reader.objects.order_by('-id')
 
 
+@login_required(login_url='/')
+def reader_home(request):
+    recent_entries = get_queryset()
+    context = {'recent_entries': recent_entries}
+    return render(request, 'reader/index.html', context)
+
+
+@login_required(login_url='/')
+def reader_overview(request):
+    all_items = get_queryset_all()
+    context = {'all_items': all_items}
+    return render(request, 'reader/overview.html', context)
+
+
 # @login_required(login_url='/')
-class ReaderAdd(CreateView):
-    model = Reader
-    template_name = 'reader/read_write.html'
-    success_url = '/reader/'
-    fields = [
-        'reader_title',
-        'reader_author',
-        'reader_entry',
-    ]
+def reader_add(request):
+    pass
+
+
+# class ReaderAdd(CreateView):
+#     model = Reader
+#     template_name = 'reader/read_write.html'
+#     success_url = '/reader/'
+#     fields = [
+#         'reader_title',
+#         'reader_author',
+#         'reader_entry',
+#     ]

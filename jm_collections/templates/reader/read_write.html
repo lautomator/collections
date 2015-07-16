@@ -3,18 +3,36 @@
 {% block title %}Add{% endblock %}
 
 {% block page %}
-    <!--// Details from the publication //-->
+    <!-- Details from the publication -->
     <h1>Add:</h1>
 
     <form action="" method="post">
         {% csrf_token %}
+        <table>
+            <tr>
+                <td><label>Title&nbsp;&nbsp;</label></td>
+                <td>
+                    <input type="text" name="reader_title">
+                </td>
+            </tr>
+            <tr>
+                <td><label>by: &nbsp;&nbsp;</label></td>
+                <td>
+                    <label>{{ reader_author }} &nbsp;&nbsp;</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Email (optional)&nbsp;&nbsp;</label></td>
+                <td>
+                    <textarea rows="10" name="content" placeholder="enter text..." name="reader_entry"></textarea>
+                </td>
+            </tr>
+        </table>
 
-        {{ form.as_p }}
-
-        <!--// update //-->
+        <!-- update -->
         <div>
             <input type="submit" value="add entry" /><br>
-            <!--// cancel //-->
+            <!-- cancel -->
             <a href="{% url 'reader:index' %}">
             <input type="button" value="cancel" /><a><br>
         </div>

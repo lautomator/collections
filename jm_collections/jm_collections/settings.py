@@ -78,3 +78,5 @@ STATICFILES_DIRS = (
 STATIC_URL = os.path.join(BASE_DIR, 'static/')
 
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates/')]
+
+LOGIN_URL = [os.path.join(BASE_DIR, '/')]

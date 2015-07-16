@@ -5,9 +5,11 @@ from reader import views
 urlpatterns = patterns(
     '',
     # /reader/
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', views.reader_home, name='index'),
+    # /reader/
+    # url(r'^$', views.IndexView.as_view(), name='index'),
     # /reader/overview/
-    url(r'^overview/$', views.OverviewView.as_view(), name='overview'),
+    url(r'^overview/$', views.reader_overview, name='overview'),
     # /reader/add/
-    url(r'^add/$', views.ReaderAdd.as_view(), name='add')
+    url(r'^add/$', views.reader_add, name='add')
 )
