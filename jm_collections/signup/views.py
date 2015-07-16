@@ -3,10 +3,10 @@ import re
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 
 
-# validation directives
+# validation regexes
 _user_re = re.compile(r'^[a-zA-Z0-9_-]{3,20}$')
 _pw_re = re.compile(r'^.{3,20}$')
 _email_re = re.compile(r'^[\S]+@[\S]+\.[\S]+$')
@@ -29,13 +29,22 @@ def valid_email(s):
     return _email_re.match(s)
 
 
-# data entry check
+# check for an existing user
+def get_user(u, p):
+    user = authenticate(username=u, password=p)
+    if user is not None:
+        if user.is_active:
+            return True
+
+
+# run the checks for data entry and unique, valid user
 def check_signup(u, p, v, e):
     params = {}
 
-    # run the checks for valid user data entry
     if not valid_username(u):
         params['err_name'] = "That's not a valid username."
+    elif get_user(u, p):
+        params['err_name'] = "That user already exists."
 
     if not valid_password(p):
         params['err_password'] = "That's not a valid password."
@@ -49,14 +58,6 @@ def check_signup(u, p, v, e):
         return params
 
 
-# check for an existing user
-def get_user(u, p):
-    user = authenticate(username=u, password=p)
-    if user is not None:
-        if user.is_active:
-            return True
-
-
 def signup(request):
     username = request.POST.get("username", '')
     password = request.POST.get("password", '')
@@ -65,8 +66,6 @@ def signup(request):
 
     if username or password or email or verify:
         error = check_signup(username, password, verify, email)
-
-        set_user = False
 
         if error:
             context = {
@@ -79,20 +78,29 @@ def signup(request):
             # has warnings; re-render the page with warnings
             return render(request, 'signup/signup.html', context)
         else:
-            # check that the user does not already exist
-            if get_user(username, password):
-                set_user = True
-            else:
-                context = {
+            User.objects.create_user(username, email, password)
+            print 'DB QUERY'  # can log a db query
 
-                return render(request, 'signup/signup.html', context)
-
-
-
-    return redirect('/')
+            return redirect('/')
 
     return render(request, 'signup/signup.html')
 
 
 def login(request):
+    username = request.POST.get("username", '')
+    password = request.POST.get("password", '')
+
+    if username and password:
+        if get_user(username, password) is None:
+            print get_user(username, password)
+            has_warning = 'invalid login'
+            context = {'has_warning': has_warning}
+            return render(request, 'signup/index.html', context)
+        else:
+            return redirect('/reader')
+
     return render(request, 'signup/index.html')
+
+
+def logout(request):
+    pass

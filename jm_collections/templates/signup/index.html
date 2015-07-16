@@ -38,27 +38,27 @@
     <div id="page">
         <!-- the login form -->
         <form method="post">
-              <table>
-                    <tr>
-                        <td><label>Username&nbsp;&nbsp;</label></td>
-                        <td>
-                            <input type="text" name="username" value="{{ username }}">
-                            <p>{{ err_name }}</p>
-                        </td>
-                    </tr>
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td><label>Username&nbsp;&nbsp;</label></td>
+                    <td>
+                        <input type="text" name="username" value="{{ username }}">
+                    </td>
+                </tr>
 
-                    <tr>
-                        <td><label>Password&nbsp;&nbsp;</label></td>
-                        <td>
-                            <input type="password" name="password" value="{{ password }}">
-                            <p>{{ err_password }}</p>
-                        </td>
-                    </tr>
+                <tr>
+                    <td><label>Password&nbsp;&nbsp;</label></td>
+                    <td>
+                        <input type="password" name="password" value="{{ password }}">
+                        <p>{{ has_warning }}</p>
+                    </td>
+                </tr>
 
-                    <tr>
-                        <td colspan="2"><input type="submit" value="submit"></td>
-                    </tr>
-              </table>
+                <tr>
+                    <td colspan="2"><input type="submit" value="submit"></td>
+                </tr>
+            </table>
         </form><!-- login form ends -->
     </div><!-- page ends -->
 </body>
