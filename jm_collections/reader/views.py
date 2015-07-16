@@ -35,21 +35,43 @@ def reader_overview(request):
     return render(request, 'reader/overview.html', context)
 
 
-# @login_required(login_url='/')
+def check_entries(t, e):
+    params = {}
+    if not t or not e:
+        params['has_warning'] = "Fill in all fields."
+
+    return params
+
+
+@login_required(login_url='/')
 def reader_add(request):
     reader_title = request.POST.get("reader_title", '')
     reader_author = ''
     reader_entry = request.POST.get("reader_entry", '')
 
-    if reader_title and reader_entry:
+    if reader_title or reader_entry:
+        error = check_entries(reader_title, reader_entry)
 
-        # add entries to db
+        if error:
+            context = {
+                'reader_title': reader_title,
+                'reader_author': reader_author,
+                'reader_entry': reader_entry
+            }
+            context.update(error)
+            return render(request, 'reader/read_write.html', context)
 
-        # update the cache
+        else:
+            # add entries to db
+            r = Reader.objects
+            r.create(reader_title=reader_title,
+                     reader_author=reader_author,
+                     reader_entry=reader_entry)
 
-        # this could go to a review page
+            # update the cache
 
-        return redirect('reader/index.html')
+            # this could go to a review page
 
-    context = {'reader_author': reader_author}
-    return render(request, 'reader/read_write.html', context)
+            return redirect('/reader/')
+
+    return render(request, 'reader/read_write.html')
