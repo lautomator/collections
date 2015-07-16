@@ -1,9 +1,11 @@
 from django.views.generic import ListView
 from django.views.generic import CreateView
+from django.contrib.auth.decorators import login_required
 
 from reader.models import Reader
 
 
+@login_required(login_url='/')
 class IndexView(ListView):
     template_name = 'reader/index.html'
     context_object_name = 'recent_entries'
@@ -19,6 +21,7 @@ class IndexView(ListView):
         return recent_entries
 
 
+# @login_required(login_url='/')
 class OverviewView(ListView):
     template_name = 'reader/overview.html'
     context_object_name = 'all_items'
@@ -28,6 +31,7 @@ class OverviewView(ListView):
         return Reader.objects.order_by('-id')
 
 
+# @login_required(login_url='/')
 class ReaderAdd(CreateView):
     model = Reader
     template_name = 'reader/read_write.html'

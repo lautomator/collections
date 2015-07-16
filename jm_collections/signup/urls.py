@@ -5,7 +5,7 @@ from signup import views
 urlpatterns = patterns(
     '',
     # /
-    url(r'^$', views.login, name='index'),
+    url(r'^$', views.user_login, name='index'),
     # /signup/
-    url(r'^signup/$', views.signup, name='signup'),
+    url(r'^signup/$', views.user_signup, name='signup'),
 )

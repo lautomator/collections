@@ -2,8 +2,8 @@ import re
 
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 
 # validation regexes
@@ -58,7 +58,7 @@ def check_signup(u, p, v, e):
         return params
 
 
-def signup(request):
+def user_signup(request):
     username = request.POST.get("username", '')
     password = request.POST.get("password", '')
     verify = request.POST.get("verify", '')
@@ -86,21 +86,23 @@ def signup(request):
     return render(request, 'signup/signup.html')
 
 
-def login(request):
+def user_login(request):
     username = request.POST.get("username", '')
     password = request.POST.get("password", '')
 
     if username and password:
         if get_user(username, password) is None:
-            print get_user(username, password)
             has_warning = 'invalid login'
             context = {'has_warning': has_warning}
             return render(request, 'signup/index.html', context)
         else:
+            user = authenticate(username=username, password=password)
+            login(request, user)
             return redirect('/reader')
 
     return render(request, 'signup/index.html')
 
 
-def logout(request):
-    pass
+def user_logout(request):
+    logout(request)
+    return redirect('/')
