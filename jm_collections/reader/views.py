@@ -1,5 +1,5 @@
 from django.shortcuts import render
-# from django.views.generic import CreateView
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
 from reader.models import Reader
@@ -37,15 +37,19 @@ def reader_overview(request):
 
 # @login_required(login_url='/')
 def reader_add(request):
-    pass
+    reader_title = request.POST.get("reader_title", '')
+    reader_author = ''
+    reader_entry = request.POST.get("reader_entry", '')
 
+    if reader_title and reader_entry:
 
-# class ReaderAdd(CreateView):
-#     model = Reader
-#     template_name = 'reader/read_write.html'
-#     success_url = '/reader/'
-#     fields = [
-#         'reader_title',
-#         'reader_author',
-#         'reader_entry',
-#     ]
+        # add entries to db
+
+        # update the cache
+
+        # this could go to a review page
+
+        return redirect('reader/index.html')
+
+    context = {'reader_author': reader_author}
+    return render(request, 'reader/read_write.html', context)

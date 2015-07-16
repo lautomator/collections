@@ -10,24 +10,27 @@
         {% csrf_token %}
         <table>
             <tr>
-                <td><label>Title&nbsp;&nbsp;</label></td>
-                <td>
-                    <input type="text" name="reader_title">
-                </td>
-            </tr>
-            <tr>
                 <td><label>by: &nbsp;&nbsp;</label></td>
                 <td>
                     <label>{{ reader_author }} &nbsp;&nbsp;</label>
                 </td>
             </tr>
+
             <tr>
-                <td><label>Email (optional)&nbsp;&nbsp;</label></td>
+                <td><label>Title&nbsp;&nbsp;</label></td>
+                <td>
+                    <input type="text" name="reader_title">
+                </td>
+            </tr>
+
+            <tr>
+                <td><label>Entry&nbsp;&nbsp;</label></td>
                 <td>
                     <textarea rows="10" name="content" placeholder="enter text..." name="reader_entry"></textarea>
                 </td>
             </tr>
         </table>
+        <p>{{ has_warning }}</p>
 
         <!-- update -->
         <div>
