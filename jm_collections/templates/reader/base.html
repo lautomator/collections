@@ -20,7 +20,7 @@
             <a href="{% url 'info:about' %}"
                 class="header_txt">
                 About</a> |
-                {{ reader_author }} (<a href="{% url 'signup:user_logout' %}" class="header_txt">logout</a>)
+                {{ reader_author }} (<a href="{% url 'signup:logout' %}" class="header_txt">logout</a>)
             </p>
         {% endblock %}
     </header>

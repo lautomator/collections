@@ -1,0 +1,40 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'info/base-styles.css' %}" />
+
+    <style type="text/css">
+
+        .page_title {
+            background-color: #009933;
+            padding: 5px 0 5px 9px;
+            color: #fff;
+            border-radius: 3px;
+        }
+
+    </style>
+
+    <title >Logout</title>
+</head>
+
+<body>
+    <h1 class="page_title">Logout</h1>
+    <!-- main navigation -->
+    <header>
+        <p class="header_txt">
+        Apps:
+        <a href="{% url 'info:about' %}"
+            class="header_txt">
+            About</a>
+        </p>
+        <p><a href="{% url 'signup:index' %}">login</a></p>
+    </header>
+
+    <!-- page begins -->
+    <div id="page">
+        <p>You have logged out.</p>
+    </div><!-- page ends -->
+</body>
+</html>

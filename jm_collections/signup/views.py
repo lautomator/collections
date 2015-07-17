@@ -103,4 +103,4 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('/')
+    return render(request, 'signup/logout.html')

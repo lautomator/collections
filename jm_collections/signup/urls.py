@@ -8,6 +8,6 @@ urlpatterns = patterns(
     url(r'^$', views.user_login, name='index'),
     # /signup/
     url(r'^signup/$', views.user_signup, name='signup'),
-    # / (logout)
-    url(r'^logout/$', views.user_signup, name='user_logout')
+    # /logout/
+    url(r'^logout/$', views.user_logout, name='logout')
 )
