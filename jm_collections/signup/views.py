@@ -2,23 +2,28 @@ import re
 
 from django.shortcuts import render
 from django.shortcuts import redirect
+
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-# validation regexes
-_user_re = re.compile(r'^[a-zA-Z0-9_-]{3,20}$')
-_pw_re = re.compile(r'^.{3,20}$')
-_email_re = re.compile(r'^[\S]+@[\S]+\.[\S]+$')
+def get_user(u, p):
+    ''' Returns True for an existing user '''
+    user = authenticate(username=u, password=p)
+    if user is not None:
+        if user.is_active:
+            return True
 
 
 # validate user entries
 def valid_username(s):
-    return _user_re.match(s)
+    user_re = re.compile(r'^[a-zA-Z0-9_-]{3,20}$')
+    return user_re.match(s)
 
 
 def valid_password(s1):
-    return _pw_re.match(s1)
+    pw_re = re.compile(r'^.{3,20}$')
+    return pw_re.match(s1)
 
 
 def valid_verify(s1, s2):
@@ -26,19 +31,12 @@ def valid_verify(s1, s2):
 
 
 def valid_email(s):
-    return _email_re.match(s)
+    email_re = re.compile(r'^[\S]+@[\S]+\.[\S]+$')
+    return email_re.match(s)
 
 
-# check for an existing user
-def get_user(u, p):
-    user = authenticate(username=u, password=p)
-    if user is not None:
-        if user.is_active:
-            return True
-
-
-# run the checks for data entry and unique, valid user
 def check_signup(u, p, v, e):
+    ''' Checks for valid input and returns messages '''
     params = {}
 
     if not valid_username(u):
@@ -79,7 +77,7 @@ def user_signup(request):
             return render(request, 'signup/signup.html', context)
         else:
             User.objects.create_user(username, email, password)
-            print 'DB QUERY'  # can log a db query
+            print '=== DB QUERY ==='  # can log a db query
 
             return redirect('/')
 
@@ -87,10 +85,10 @@ def user_signup(request):
 
 
 def user_login(request):
-    username = request.POST.get("username", '')
-    password = request.POST.get("password", '')
+    if request.method == 'POST':
+        username = request.POST.get("username", '')
+        password = request.POST.get("password", '')
 
-    if username and password:
         if get_user(username, password) is None:
             has_warning = 'invalid login'
             context = {'has_warning': has_warning}

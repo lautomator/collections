@@ -42,7 +42,7 @@ h2 {
     font-weight: bold;
 }
 
-input {
+input, textarea {
     margin-left: -2px;
     color: #555;
     border: solid 1px #e6e6e6;
@@ -69,7 +69,7 @@ a:hover {
     text-decoration: underline;
 }
 
-ul {list-style: none;}
+ul { list-style: none; }
 
 li.reader_entry {
     padding-bottom: 6px;
