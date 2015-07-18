@@ -11,21 +11,18 @@
 
 <body>
     <h1 class="page_title">Publications</h1>
-    <!--// main navigation //-->
+    <!-- main navigation -->
     <header>
         {% block header %}
             <p class="header_txt">
-            Apps:
             Publications |
             <a href="{% url 'reader:index' %}" class="header_txt">
                 Reader</a> |
-            <a href="{% url 'info:about' %}" 
-                class="header_txt">
-                About</a>
+                {{ reader_author }} (<a href="{% url 'signup:logout' %}" class="header_txt">logout</a>)
             </p>
         {% endblock %}
     </header>
-    <!--// local navigation //-->
+    <!-- local navigation -->
     <nav>
         <p>
             <a href="{% url 'books:index' %}">home</a>
@@ -34,19 +31,19 @@
         </p>
     </nav>
 
-    <!--// page begins //-->
+    <!-- page begins -->
     <div id="page">
 
         {% block page %}
-        <!--// content //-->
+        <!-- content -->
         {% endblock %}
 
-    </div><!--// page ends //-->
-    <!--// footer begins //-->
+    </div><!-- page ends -->
+    <!-- footer begins -->
     <footer>
         {% block footer %}
-        <!--// auto date to be added //-->
+        <!-- auto date to be added -->
         {% endblock %}
-    </footer><!--// footer ends //-->
+    </footer><!-- footer ends -->
 </body>
 </html>

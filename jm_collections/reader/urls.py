@@ -6,8 +6,6 @@ urlpatterns = patterns(
     '',
     # /reader/
     url(r'^$', views.reader_home, name='index'),
-    # /reader/
-    # url(r'^$', views.IndexView.as_view(), name='index'),
     # /reader/overview/
     url(r'^overview/$', views.reader_overview, name='overview'),
     # /reader/add/

@@ -3,7 +3,7 @@
 {% block title %}Edit{% endblock %}
 
 {% block page %}
-    <!--// Details from the publication //-->
+    <!-- Details from the publication -->
     <h1>Edit:</h1>
     <h2>{{ object.title }}</h2>
 
@@ -12,13 +12,13 @@
 
         {{ form.as_p }}
 
-        <!--// update //-->
+        <!-- update -->
         <div>
             <input type="submit" value="update" /><br>
-            <!--// cancel //-->
+            <!-- cancel -->
             <a href="{% url 'books:overview' %}">
             <input type="button" value="cancel" /><a><br>
-            <!--// delete //-->
+            <!-- delete -->
             <a href="{% url 'books:delete' object.pk %}">
             <input type="button" value="delete" /></a>
         </div>
