@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+
 from reader.models import Reader
 
 
@@ -28,19 +29,19 @@ def get_queryset_all():
 
 @login_required(login_url='/')
 def reader_home(request):
-    reader_author = request.user
+    author = request.user
     recent_entries = get_queryset()
     context = {'recent_entries': recent_entries,
-               'reader_author': reader_author}
+               'author': author}
     return render(request, 'reader/index.html', context)
 
 
 @login_required(login_url='/')
 def reader_overview(request):
-    reader_author = request.user
+    author = request.user
     all_items = get_queryset_all()
     context = {'all_items': all_items,
-               'reader_author': reader_author}
+               'author': author}
     return render(request, 'reader/overview.html', context)
 
 
@@ -58,11 +59,11 @@ def check_entries(t, e):
 
 @login_required(login_url='/')
 def reader_add(request):
-    reader_author = request.user
+    author = request.user
 
     if request.method == 'POST':
         reader_title = request.POST.get("reader_title", '')
-        reader_author = request.user
+        author = request.user
         reader_entry = request.POST.get("reader_entry", '')
 
         error = check_entries(reader_title, reader_entry)
@@ -70,7 +71,7 @@ def reader_add(request):
         if error:
             context = {
                 'reader_title': reader_title,
-                'reader_author': reader_author,
+                'author': author,
                 'reader_entry': reader_entry
             }
             context.update(error)
@@ -80,7 +81,7 @@ def reader_add(request):
             # add entries to db
             r = Reader.objects
             r.create(reader_title=reader_title,
-                     reader_author=reader_author,
+                     author=author,
                      reader_entry=reader_entry)
 
             # TODO: update the cache, when it is created
@@ -89,5 +90,5 @@ def reader_add(request):
 
             return redirect('/reader/')
 
-    context = {'reader_author': reader_author}
+    context = {'author': author}
     return render(request, 'reader/read_write.html', context)

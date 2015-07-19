@@ -5,17 +5,17 @@ from books import views
 urlpatterns = patterns(
     '',
     # /books/
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    # /books/<pk>/details/
-    url(r'^(?P<pk>\d+)/details/$', views.DetailsView.as_view(),
+    url(r'^$', views.publications_home, name='index'),
+    # /books/<pub_id>/details/
+    url(r'^(?P<pub_id>\d+)/details/$', views.publication_details,
         name='details'),
     # /books/overview/
-    url(r'^overview/$', views.OverviewView.as_view(), name='overview'),
-    # /books/<pk>/edit/
-    url(r'^(?P<pk>\d+)/edit/$', views.EditView.as_view(), name='edit'),
+    url(r'^overview/$', views.publication_overview, name='overview'),
+    # /books/<pub_id>/edit/
+    url(r'^(?P<pub_id>\d+)/edit/$', views.publication_edit, name='edit'),
     # /books/add/
     url(r'^add/$', views.PublicationAdd.as_view(), name='add'),
-    # /books/<pk>/delete/
-    url(r'^(?P<pk>\d+)/delete/$', views.PublicationDelete.as_view(),
-        name='delete'),
+    # /books/<pub_id>/delete/
+    url(r'^(?P<pub_id>\d+)/delete/$', views.PublicationDelete.as_view(),
+        name='delete')
 )

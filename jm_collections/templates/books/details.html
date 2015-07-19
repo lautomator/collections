@@ -6,11 +6,11 @@
     <!-- Details from the publication -->
     <h1>Publication Details</h1>
     <ul>
-        <li>Title:<strong> {{ object.title }}</strong></li>
-        <li>Author:<strong> {{ object.author }}</strong></li>
-        <li>Publication Date: {{ object.pub_date }}</li>
-        <li>Category: {{ object.category }}</li>
-        <li class="button"><a href="{% url 'books:edit' object.id %}">
+        <li>Title:<strong> {{ pub_details.title }}</strong></li>
+        <li>Author:<strong> {{ pub_details.author }}</strong></li>
+        <li>Publication Date: {{ pub_details.pub_date }}</li>
+        <li>Category: {{ pub_details.category }}</li>
+        <li class="button"><a href="{% url 'books:edit' pub_details.id %}">
         	edit</a></li>
     </ul>
 {% endblock %}

@@ -10,16 +10,54 @@
     <form action="" method="post">
         {% csrf_token %}
 
-        {{ form.as_p }}
+        <table>
+            <tr>
+                <td><label>Title&nbsp;&nbsp;</label></td>
+                <td>
+                    <input type="text" name="publication_title" value="{{ pub.title }}">
+                    <p>{{ error_publication_title }}</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label>Author&nbsp;&nbsp;</label></td>
+                <td>
+                    <input type="text" name="publication_author" value="{{ pub.author }}">
+                    <p>{{ error_publication_author }}</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label>Pub date&nbsp;&nbsp;</label></td>
+                <td>
+                    <input type="text" name="publication_date" value="{{ pub.pub_date }}">
+                    <p>{{ error_publication_date }}</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label>Category&nbsp;&nbsp;</label></td>
+                <td>
+                    <!-- TODO: need to get current category as selection -->
+                    <select name="publication_category">
+                        {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                        {% endfor%}
+                    </select>
+                </td>
+            </tr>
+        </table>
 
         <!-- update -->
         <div>
+            <br>
             <input type="submit" value="update" /><br>
             <!-- cancel -->
             <a href="{% url 'books:overview' %}">
             <input type="button" value="cancel" /><a><br>
             <!-- delete -->
-            <a href="{% url 'books:delete' object.pk %}">
+            <a href="{% url 'books:delete' pub.id %}">
+                <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
             <input type="button" value="delete" /></a>
         </div>
     </form>
