@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -54,6 +56,12 @@ def get_category_code(category):
             return c[0]
 
 
+def check_date(date):
+    ''' Return True if any 4 numbers '''
+    date_re = re.compile(r'^[0-9]{4}$')
+    return date_re.match(date)
+
+
 def check_entries(title, author, date):
     ''' Checks for valid input and returns messages '''
     params = {}
@@ -62,7 +70,9 @@ def check_entries(title, author, date):
     if not author:
         params['error_publication_author'] = "Add an author."
     if not date:
-        params['error_publication_author'] = "Add a publication date."
+        params['error_publication_date'] = "Add a publication date."
+    elif not check_date(date):
+        params['error_publication_date'] = "Enter a proper date (i.e., 1945)"
 
     if params:
         return params
@@ -108,14 +118,12 @@ def publication_edit(request, pub_id):
         pub_date = request.POST.get("publication_date", '')
         category = request.POST.get("publication_category", '')
 
-        error = check_entries(title, author, pub_date)
+        error = check_entries(title, pub_author, pub_date)
 
         if error:
             context = {'author': author,
-                       'title': title,
-                       'pub_author': pub_author,
-                       'pub_date': pub_date,
-                       'category': category}
+                       'pub': pub,
+                       'categories': categories}
 
             context.update(error)
             return render(request, 'books/pub_edit.html', context)
@@ -146,24 +154,35 @@ def publication_add(request):
 
     if request.method == 'POST':
         title = request.POST.get("publication_title", '')
-        author = request.POST.get("publication_author", '')
+        pub_author = request.POST.get("publication_author", '')
         pub_date = request.POST.get("publication_date", '')
         category = get_category_code(
             request.POST.get("publication_category", ''))
 
-        # TODO: there should be some validation for the data entered
+        error = check_entries(title, pub_author, pub_date)
 
-        # add the new record
-        pub = Publication(title=title,
-                          author=author,
-                          pub_date=pub_date,
-                          category=category)
+        if error:
+            context = {'author': author,
+                       'publication_title': title,
+                       'publication_author': pub_author,
+                       'publication_date': pub_date,
+                       'categories': categories}
 
-        pub.save()
+            context.update(error)
+            return render(request, 'books/pub_add.html', context)
 
-        # TODO update the cache
+        else:
+            # add the new record
+            pub = Publication(title=title,
+                              author=pub_author,
+                              pub_date=pub_date,
+                              category=category)
 
-        return redirect('/books/overview/')
+            pub.save()
+
+            # TODO update the cache
+
+            return redirect('/books/overview/')
 
     context = {'author': author,
                'categories': categories}
