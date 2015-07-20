@@ -48,17 +48,17 @@
             </tr>
         </table>
 
-        <!-- update -->
         <div>
             <br>
+            <!-- update -->
             <input type="submit" value="update" /><br>
             <!-- cancel -->
             <a href="{% url 'books:overview' %}">
             <input type="button" value="cancel" /><a><br>
             <!-- delete -->
             <a href="{% url 'books:delete' pub.id %}">
-                <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
-            <input type="button" value="delete" /></a>
+            <input type="button" value="delete" /></a><br>
+            <cite>You will be asked to confirm on the next page.</cite>
         </div>
     </form>
 {% endblock %}

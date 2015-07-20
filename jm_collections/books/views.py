@@ -2,9 +2,6 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
-from django.views.generic import CreateView
-from django.views.generic import DeleteView
-
 from books.models import Publication
 
 
@@ -92,6 +89,9 @@ def publication_edit(request, pub_id):
     categories = get_categories()
 
     if request.method == 'POST':
+
+        # TODO: there should be some validation for the data entered
+
         pub.title = request.POST.get("publication_title", '')
         pub.author = request.POST.get("publication_author", '')
         pub.pub_date = request.POST.get("publication_date", '')
@@ -101,9 +101,9 @@ def publication_edit(request, pub_id):
 
         pub.save()
 
-        return redirect('/books/overview/')
+        # TODO: update cache
 
-    # TODO: update cache
+        return redirect('/books/overview/')
 
     context = {'author': author,
                'pub': pub,
@@ -112,19 +112,50 @@ def publication_edit(request, pub_id):
     return render(request, 'books/pub_edit.html', context)
 
 
-class PublicationAdd(CreateView):
-    model = Publication
-    template_name = 'books/pub_add.html'
-    success_url = '../overview/'
-    fields = [
-        'title',
-        'author',
-        'pub_date',
-        'category',
-    ]
+@login_required(login_url='/')
+def publication_add(request):
+    author = request.user
+    categories = get_categories()
+
+    if request.method == 'POST':
+        title = request.POST.get("publication_title", '')
+        author = request.POST.get("publication_author", '')
+        pub_date = request.POST.get("publication_date", '')
+        category = get_category_code(
+            request.POST.get("publication_category", ''))
+
+        # TODO: there should be some validation for the data entered
+
+        # add the new record
+        pub = Publication(title=title,
+                          author=author,
+                          pub_date=pub_date,
+                          category=category)
+
+        pub.save()
+
+        # TODO update the cache
+
+        return redirect('/books/overview/')
+
+    context = {'author': author,
+               'categories': categories}
+    return render(request, 'books/pub_add.html', context)
 
 
-class PublicationDelete(DeleteView):
-    model = Publication
-    template_name = 'books/delete.html'
-    success_url = '/books/overview'
+@login_required(login_url='/')
+def publication_delete(request, pub_id):
+    author = request.user
+    pub = get_record_details(pub_id)
+
+    if request.method == 'POST':
+
+        pub.delete()
+
+        # TODO: update the cache
+
+        return redirect('/books/overview/')
+
+    context = {'author': author,
+               'pub': pub}
+    return render(request, 'books/pub_delete.html', context)

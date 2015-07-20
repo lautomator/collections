@@ -14,8 +14,8 @@ urlpatterns = patterns(
     # /books/<pub_id>/edit/
     url(r'^(?P<pub_id>\d+)/edit/$', views.publication_edit, name='edit'),
     # /books/add/
-    url(r'^add/$', views.PublicationAdd.as_view(), name='add'),
+    url(r'^add/$', views.publication_add, name='add'),
     # /books/<pub_id>/delete/
-    url(r'^(?P<pub_id>\d+)/delete/$', views.PublicationDelete.as_view(),
+    url(r'^(?P<pub_id>\d+)/delete/$', views.publication_delete,
         name='delete')
 )
