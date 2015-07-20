@@ -27,13 +27,13 @@ def get_queryset_all():
     return Reader.objects.order_by('-id')
 
 
-def check_entries(t, e):
+def check_entries(title, entry):
     ''' Checks for valid input and returns messages '''
     params = {}
-    if not t:
+    if not title:
         params['error_reader_title'] = "Add a title."
-    if not e:
-        params['error_reader_entry'] = "Creat an entry."
+    if not entry:
+        params['error_reader_entry'] = "Create an entry."
 
     if params:
         return params

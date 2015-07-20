@@ -54,6 +54,20 @@ def get_category_code(category):
             return c[0]
 
 
+def check_entries(title, author, date):
+    ''' Checks for valid input and returns messages '''
+    params = {}
+    if not title:
+        params['error_publication_title'] = "Add a title."
+    if not author:
+        params['error_publication_author'] = "Add an author."
+    if not date:
+        params['error_publication_author'] = "Add a publication date."
+
+    if params:
+        return params
+
+
 @login_required(login_url='/')
 def publications_home(request):
     author = request.user
@@ -89,21 +103,34 @@ def publication_edit(request, pub_id):
     categories = get_categories()
 
     if request.method == 'POST':
-
-        # TODO: there should be some validation for the data entered
-
-        pub.title = request.POST.get("publication_title", '')
-        pub.author = request.POST.get("publication_author", '')
-        pub.pub_date = request.POST.get("publication_date", '')
-
+        title = request.POST.get("publication_title", '')
+        pub_author = request.POST.get("publication_author", '')
+        pub_date = request.POST.get("publication_date", '')
         category = request.POST.get("publication_category", '')
-        pub.category = get_category_code(category)
 
-        pub.save()
+        error = check_entries(title, author, pub_date)
 
-        # TODO: update cache
+        if error:
+            context = {'author': author,
+                       'title': title,
+                       'pub_author': pub_author,
+                       'pub_date': pub_date,
+                       'category': category}
 
-        return redirect('/books/overview/')
+            context.update(error)
+            return render(request, 'books/pub_edit.html', context)
+
+        else:
+            pub.title = title
+            pub.author = pub_author
+            pub.pub_date = pub_date
+            pub.category = get_category_code(category)
+
+            pub.save()
+
+            # TODO: update cache
+
+            return redirect('/books/overview/')
 
     context = {'author': author,
                'pub': pub,
