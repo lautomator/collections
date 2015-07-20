@@ -27,6 +27,18 @@ def get_queryset_all():
     return Reader.objects.order_by('-id')
 
 
+def check_entries(t, e):
+    ''' Checks for valid input and returns messages '''
+    params = {}
+    if not t:
+        params['error_reader_title'] = "Add a title."
+    if not e:
+        params['error_reader_entry'] = "Creat an entry."
+
+    if params:
+        return params
+
+
 @login_required(login_url='/')
 def reader_home(request):
     author = request.user
@@ -43,18 +55,6 @@ def reader_overview(request):
     context = {'all_items': all_items,
                'author': author}
     return render(request, 'reader/overview.html', context)
-
-
-def check_entries(t, e):
-    ''' Checks for valid input and returns messages '''
-    params = {}
-    if not t:
-        params['error_reader_title'] = "Add a title."
-    if not e:
-        params['error_reader_entry'] = "Creat an entry."
-
-    if params:
-        return params
 
 
 @login_required(login_url='/')
