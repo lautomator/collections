@@ -38,9 +38,13 @@
                 <td><label>Category&nbsp;&nbsp;</label></td>
                 <td>
                     <select name="publication_category">
-                        {% for category in categories %}
+                    {% for category in categories %}
+                        {% if  category == chosen_category %}
+                        <option value="{{ category }}" selected>{{ category }}</option>
+                        {% else %}
                         <option value="{{ category }}">{{ category }}</option>
-                        {% endfor%}
+                        {% endif %}
+                    {% endfor%}
                     </select>
                 </td>
             </tr>

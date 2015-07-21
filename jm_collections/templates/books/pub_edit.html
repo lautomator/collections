@@ -38,11 +38,14 @@
             <tr>
                 <td><label>Category&nbsp;&nbsp;</label></td>
                 <td>
-<!-- TODO: need to get current category as selection -->
                     <select name="publication_category">
-                        {% for category in categories %}
+                    {% for category in categories %}
+                        {% if category == current_category_ln %}
+                        <option value="{{ category }}" selected>{{ category }}</option>
+                        {% else %}
                         <option value="{{ category }}">{{ category }}</option>
-                        {% endfor%}
+                        {% endif %}
+                    {% endfor%}
                     </select>
                 </td>
             </tr>

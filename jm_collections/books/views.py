@@ -10,7 +10,7 @@ from books.models import Publication
 def get_queryset():
     ''' Return the last 5 records '''
 
-# TODO: use cache
+    # TODO: use cache
 
     return Publication.objects.order_by('-id')[:5]
 
@@ -31,21 +31,21 @@ def get_queryset_all():
 
 
 def get_categories():
-    ''' Returns the long-name category '''
+    ''' Returns a list of the long-name categories '''
 
     # TODO: use cache
 
     categories = Publication.CATEGORIES
-    category_codes = []
+    categories_ln = []
 
     for c in categories:
-        category_codes.append(str(c[1]))
+        categories_ln.append(str(c[1]))
 
-    return category_codes
+    return categories_ln
 
 
 def get_category_code(category):
-    ''' Returns the 3-letter code '''
+    ''' Returns the 3-letter code from the long name'''
 
     # TODO: use cache
 
@@ -54,6 +54,18 @@ def get_category_code(category):
     for c in categories:
         if str(c[1]) == category:
             return c[0]
+
+
+def get_long_category(category):
+    ''' Returns a single long-name category from the category code '''
+
+    # TODO: use cache
+
+    categories = Publication.CATEGORIES
+
+    for c in categories:
+        if str(c[0]) == category:
+            return c[1]
 
 
 def check_date(date):
@@ -109,8 +121,9 @@ def publication_overview(request):
 def publication_edit(request, pub_id):
     author = request.user
     pub = get_record_details(pub_id)
-    current_category = pub.category
-    categories = get_categories()
+    current_category = pub.category  # ex., VIS
+    categories = get_categories()  # ex., [Visual Arts, ..., ...]
+    current_category_ln = get_long_category(current_category)
 
     if request.method == 'POST':
         title = request.POST.get("publication_title", '')
@@ -129,6 +142,8 @@ def publication_edit(request, pub_id):
             return render(request, 'books/pub_edit.html', context)
 
         else:
+            # update the record
+
             pub.title = title
             pub.author = pub_author
             pub.pub_date = pub_date
@@ -143,7 +158,8 @@ def publication_edit(request, pub_id):
     context = {'author': author,
                'pub': pub,
                'categories': categories,
-               'current_category': current_category}
+               'current_category': current_category,
+               'current_category_ln': current_category_ln}
     return render(request, 'books/pub_edit.html', context)
 
 
@@ -156,8 +172,7 @@ def publication_add(request):
         title = request.POST.get("publication_title", '')
         pub_author = request.POST.get("publication_author", '')
         pub_date = request.POST.get("publication_date", '')
-        category = get_category_code(
-            request.POST.get("publication_category", ''))
+        chosen_category = request.POST.get("publication_category", '')
 
         error = check_entries(title, pub_author, pub_date)
 
@@ -166,6 +181,7 @@ def publication_add(request):
                        'publication_title': title,
                        'publication_author': pub_author,
                        'publication_date': pub_date,
+                       'chosen_category': chosen_category,
                        'categories': categories}
 
             context.update(error)
@@ -176,7 +192,7 @@ def publication_add(request):
             pub = Publication(title=title,
                               author=pub_author,
                               pub_date=pub_date,
-                              category=category)
+                              category=get_category_code(chosen_category))
 
             pub.save()
 
