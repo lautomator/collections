@@ -1,5 +1,7 @@
 import re
 
+# from django.views.decorators.cache import cache_page
+
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -91,6 +93,7 @@ def check_entries(title, author, date):
 
 
 @login_required(login_url='/')
+# @cache_page(60 * 15)
 def publications_home(request):
     author = request.user
     recent_entries = get_queryset()
