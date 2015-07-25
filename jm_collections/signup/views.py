@@ -77,7 +77,7 @@ def user_signup(request):
             return render(request, 'signup/signup.html', context)
         else:
             User.objects.create_user(username, email, password)
-            print '=== DB QUERY ==='  # can log a db query
+            print '=== DB QUERY ==='  # TODO: can log a db query
 
             return redirect('/')
 

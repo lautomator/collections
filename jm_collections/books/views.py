@@ -1,7 +1,5 @@
 import re
 
-# from django.views.decorators.cache import cache_page
-
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -11,31 +9,20 @@ from books.models import Publication
 
 def get_queryset():
     ''' Return the last 5 records '''
-
-    # TODO: use cache
-
     return Publication.objects.order_by('-id')[:5]
 
 
 def get_record_details(pub_id):
-
-    # TODO: use cache
-
     return Publication.objects.get(id=pub_id)
 
 
 def get_queryset_all():
     ''' Returns every entry '''
-
-    # TODO: use cache
-
     return Publication.objects.all().order_by('id')
 
 
 def get_categories():
     ''' Returns a list of the long-name categories '''
-
-    # TODO: use cache
 
     categories = Publication.CATEGORIES
     categories_ln = []
@@ -49,8 +36,6 @@ def get_categories():
 def get_category_code(category):
     ''' Returns the 3-letter code from the long name'''
 
-    # TODO: use cache
-
     categories = Publication.CATEGORIES
 
     for c in categories:
@@ -61,8 +46,6 @@ def get_category_code(category):
 def get_long_category(category):
     ''' Returns a single long-name category from the category code '''
 
-    # TODO: use cache
-
     categories = Publication.CATEGORIES
 
     for c in categories:
@@ -72,6 +55,7 @@ def get_long_category(category):
 
 def check_date(date):
     ''' Return True if any 4 numbers '''
+
     date_re = re.compile(r'^[0-9]{4}$')
     return date_re.match(date)
 
@@ -93,7 +77,6 @@ def check_entries(title, author, date):
 
 
 @login_required(login_url='/')
-# @cache_page(60 * 15)
 def publications_home(request):
     author = request.user
     recent_entries = get_queryset()
@@ -146,15 +129,12 @@ def publication_edit(request, pub_id):
 
         else:
             # update the record
-
             pub.title = title
             pub.author = pub_author
             pub.pub_date = pub_date
             pub.category = get_category_code(category)
 
             pub.save()
-
-            # TODO: update cache
 
             return redirect('/books/overview/')
 
@@ -199,8 +179,6 @@ def publication_add(request):
 
             pub.save()
 
-            # TODO update the cache
-
             return redirect('/books/overview/')
 
     context = {'author': author,
@@ -216,8 +194,6 @@ def publication_delete(request, pub_id):
     if request.method == 'POST':
 
         pub.delete()
-
-        # TODO: update the cache
 
         return redirect('/books/overview/')
 

@@ -1,40 +1,8 @@
-{% load staticfiles %}
+{% extends "signup/base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" type="text/css" href="{% static 'info/base-styles.css' %}" />
-
-    <style type="text/css">
-
-        .page_title {
-            background-color: #009933;
-            padding: 5px 0 5px 9px;
-            color: #fff;
-            border-radius: 3px;
-        }
-
-    </style>
-
-    <title >Login</title>
-</head>
-
-<body>
-    <h1 class="page_title">Login</h1>
-    <!-- main navigation -->
-    <header>
-        <p class="header_txt">
-        <a href="{% url 'info:about' %}"
-            class="header_txt">
-            About</a>
-        </p>
-        <!-- FPO -->
+{% block page %}
         <p>New users <a href="{% url 'signup:signup' %}">signup</a>.</p>
-        <!-- FPO -->
-    </header>
 
-    <!-- page begins -->
-    <div id="page">
         <!-- the login form -->
         <form method="post">
             {% csrf_token %}
@@ -59,6 +27,4 @@
                 </tr>
             </table>
         </form><!-- login form ends -->
-    </div><!-- page ends -->
-</body>
-</html>
+{% endblock %}

@@ -5,11 +5,11 @@
 {% block title %}Overview{% endblock %}
 
 {% block page %}
-    <!--// All of the reader entries //-->
+    <!-- All of the reader entries -->
     <h1>Reader Overview</h1>
 
     {% if all_items %}
-        <!--// Render all of the titles from the table //-->
+        <!-- Render all of the titles from the table -->
         <table>
             {% for item in all_items %}
             <tr>
@@ -33,15 +33,8 @@
                 <td colspan="3">&nbsp;</td>
             </tr>
             {% endfor %}
-            <tr>
-                <td>&nbsp;</td>
-                <td>&ensp;</td>
-                <td class="button"><a href="{% url 'reader:add' %}">
-                    add an entry</a>
-                </td>
-            </tr>
         </table>
     {% else %}
-        <p>No data available:</p>
+        <p>There are no entries.</p>
     {% endif %}
 {% endblock %}

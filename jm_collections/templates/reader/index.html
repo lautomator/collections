@@ -5,7 +5,7 @@
 {% block title %}Home{% endblock %}
 
 {% block page %}
-    <!--// Recent Reader Entries //-->
+    <!-- Recent Reader Entries -->
     <h1>Recent Entries</h1>
     {% if recent_entries %}
         <ul>
@@ -18,6 +18,6 @@
         {% endfor %}
         </ul>
     {% else %}
-        <p>No data available:<br><span class="button"><a href="{% url 'reader:add' %}">add an entry</a></span></p>
+        <p>There are no entries.</p>
     {% endif %}
 {% endblock %}

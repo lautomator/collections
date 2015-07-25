@@ -1,36 +1,6 @@
-{% load staticfiles %}
+{% extends "signup/base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" type="text/css" href="{% static 'info/base-styles.css' %}" />
-
-    <style type="text/css">
-
-        .page_title {
-            background-color: #009933;
-            padding: 5px 0 5px 9px;
-            color: #fff;
-            border-radius: 3px;
-        }
-
-    </style>
-
-    <title >Logout</title>
-</head>
-
-<body>
-    <h1 class="page_title">Logout</h1>
-    <!-- main navigation -->
-    <header>
-        <p class="header_txt">
-        <a href="{% url 'info:about' %}" class="header_txt">About</a> |
-        <a href="{% url 'signup:index' %}" class="header_txt">Login</a></p>
-    </header>
-
-    <!-- page begins -->
-    <div id="page">
+{% block page %}
         <p>You have logged out.</p>
-    </div><!-- page ends -->
-</body>
-</html>
+        <p><a href="{% url 'signup:index' %}">Login again</a>.</p>
+{% endblock %}

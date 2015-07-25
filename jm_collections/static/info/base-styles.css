@@ -58,7 +58,7 @@ option {
 }
 
 .page_title {
-    background-color: #3366CC;
+    background-color: #3366cc;
     padding: 5px 0 5px 9px;
     color: #fff;
     border-radius: 3px;
@@ -83,3 +83,16 @@ li.reader_title {
 }
 
 div { margin-bottom: 15px;}
+
+.button {
+    background-color: #3366cc;
+    border-radius: 3px;
+    color: #fff;
+    display: inline;
+    padding: 5px 8px 5px 8px;
+}
+
+.button a,
+.button a:hover {
+    color: #fff;
+}

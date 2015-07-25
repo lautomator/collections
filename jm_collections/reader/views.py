@@ -8,8 +8,6 @@ from reader.models import Reader
 def get_queryset():
     ''' Return the last 5 reader entries. '''
 
-    # TODO: use cache
-
     reader_entries = Reader.objects.order_by('-id')[:5]
     no_of_entries = len(reader_entries)
     if no_of_entries < 5:
@@ -21,14 +19,11 @@ def get_queryset():
 
 def get_queryset_all():
     ''' Return all reader entries. '''
-
-    # TODO: use cache
-
     return Reader.objects.order_by('-id')
 
 
 def check_entries(title, entry):
-    ''' Checks for valid input and returns messages '''
+    ''' Check for valid input or return a message. '''
     params = {}
     if not title:
         params['error_reader_title'] = "Add a title."
@@ -39,21 +34,33 @@ def check_entries(title, entry):
         return params
 
 
-@login_required(login_url='/')
 def reader_home(request):
     author = request.user
+    authenticated = False
+
+    if author.is_authenticated():
+        authenticated = True
+
     recent_entries = get_queryset()
     context = {'recent_entries': recent_entries,
-               'author': author}
+               'author': author,
+               'authenticated': authenticated}
+
     return render(request, 'reader/index.html', context)
 
 
-@login_required(login_url='/')
 def reader_overview(request):
     author = request.user
+    authenticated = False
     all_items = get_queryset_all()
+
+    if author.is_authenticated():
+        authenticated = True
+
     context = {'all_items': all_items,
-               'author': author}
+               'author': author,
+               'authenticated': authenticated}
+
     return render(request, 'reader/overview.html', context)
 
 
@@ -63,7 +70,6 @@ def reader_add(request):
 
     if request.method == 'POST':
         reader_title = request.POST.get("reader_title", '')
-        author = request.user
         reader_entry = request.POST.get("reader_entry", '')
 
         error = check_entries(reader_title, reader_entry)
@@ -78,17 +84,13 @@ def reader_add(request):
             return render(request, 'reader/read_write.html', context)
 
         else:
-            # add entries to db
             r = Reader.objects
             r.create(reader_title=reader_title,
-                     author=author,
+                     reader_author=author,
                      reader_entry=reader_entry)
-
-            # TODO: update the cache, when it is created
-
-            # TODO: this could go to a review page
 
             return redirect('/reader/')
 
     context = {'author': author}
+
     return render(request, 'reader/read_write.html', context)

@@ -87,10 +87,12 @@ div { margin-bottom: 15px;}
 .button {
     background-color: #ff5819;
     border-radius: 3px;
-    display: inline-block;
+    color: #fff;
+    display: inline;
     padding: 5px 8px 5px 8px;
 }
 
-.button a {
+.button a,
+.button a:hover {
     color: #fff;
 }
