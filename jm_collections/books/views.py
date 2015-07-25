@@ -76,36 +76,52 @@ def check_entries(title, author, date):
         return params
 
 
-@login_required(login_url='/')
 def publications_home(request):
     author = request.user
+    authenticated = False
     recent_entries = get_queryset()
+
+    if author.is_authenticated():
+        authenticated = True
+
     context = {'recent_entries': recent_entries,
-               'author': author}
+               'author': author,
+               'authenticated': authenticated}
     return render(request, 'books/index.html', context)
 
 
-@login_required(login_url='/')
 def publication_details(request, pub_id):
     author = request.user
+    authenticated = False
     pub_details = get_record_details(pub_id)
+
+    if author.is_authenticated():
+        authenticated = True
+
     context = {'author': author,
-               'pub_details': pub_details}
+               'pub_details': pub_details,
+               'authenticated': authenticated}
     return render(request, 'books/details.html', context)
 
 
-@login_required(login_url='/')
 def publication_overview(request):
     author = request.user
+    authenticated = False
     all_items = get_queryset_all()
+
+    if author.is_authenticated():
+        authenticated = True
+
     context = {'author': author,
-               'all_items': all_items}
+               'all_items': all_items,
+               'authenticated': authenticated}
     return render(request, 'books/overview.html', context)
 
 
 @login_required(login_url='/')
 def publication_edit(request, pub_id):
     author = request.user
+    authenticated = True
     pub = get_record_details(pub_id)
     current_category = pub.category  # ex., VIS
     categories = get_categories()  # ex., [Visual Arts, ..., ...]
@@ -122,7 +138,8 @@ def publication_edit(request, pub_id):
         if error:
             context = {'author': author,
                        'pub': pub,
-                       'categories': categories}
+                       'categories': categories,
+                       'authenticated': authenticated}
 
             context.update(error)
             return render(request, 'books/pub_edit.html', context)
@@ -142,13 +159,15 @@ def publication_edit(request, pub_id):
                'pub': pub,
                'categories': categories,
                'current_category': current_category,
-               'current_category_ln': current_category_ln}
+               'current_category_ln': current_category_ln,
+               'authenticated': authenticated}
     return render(request, 'books/pub_edit.html', context)
 
 
 @login_required(login_url='/')
 def publication_add(request):
     author = request.user
+    authenticated = True
     categories = get_categories()
 
     if request.method == 'POST':
@@ -165,7 +184,8 @@ def publication_add(request):
                        'publication_author': pub_author,
                        'publication_date': pub_date,
                        'chosen_category': chosen_category,
-                       'categories': categories}
+                       'categories': categories,
+                       'authenticated': authenticated}
 
             context.update(error)
             return render(request, 'books/pub_add.html', context)
@@ -182,13 +202,15 @@ def publication_add(request):
             return redirect('/books/overview/')
 
     context = {'author': author,
-               'categories': categories}
+               'categories': categories,
+               'authenticated': authenticated}
     return render(request, 'books/pub_add.html', context)
 
 
 @login_required(login_url='/')
 def publication_delete(request, pub_id):
     author = request.user
+    authenticated = True
     pub = get_record_details(pub_id)
 
     if request.method == 'POST':
@@ -198,5 +220,6 @@ def publication_delete(request, pub_id):
         return redirect('/books/overview/')
 
     context = {'author': author,
-               'pub': pub}
+               'pub': pub,
+               'authenticated': authenticated}
     return render(request, 'books/pub_delete.html', context)

@@ -14,22 +14,33 @@
     <!-- main navigation -->
     <header>
         {% block header %}
-            <p class="header_txt">
-            Publications |
-            <a href="{% url 'reader:index' %}" class="header_txt">
-                Reader</a> |
-                {{ author }} (<a href="{% url 'signup:logout' %}" class="header_txt">logout</a>)
-            </p>
+        <p class="header_txt">
+            <a href="{% url 'reader:index' %}" class="header_txt">Reader</a> |
+
+            <a href="{% url 'info:about' %}" class="header_txt"> About</a> |
+
+        {% if authenticated %}
+            {{ author }} (<a href="{% url 'signup:logout' %}" class="header_txt">logout</a>)
+
+        {% else %}
+            <a href="{% url 'signup:index' %}" class="header_txt button">login</a>
+        {% endif %}
+        </p>
         {% endblock %}
     </header>
     <!-- local navigation -->
+    {% block nav %}
     <nav>
         <p>
             <a href="{% url 'books:index' %}">home</a>
             &nbsp;|&nbsp;
             <a href="{% url 'books:overview' %}">overview</a>
+            {% if authenticated %}
+            | <a href="{% url 'books:add' %}" class="button">add a publication</a>
+            {% endif %}
         </p>
     </nav>
+    {% endblock %}
 
     <!-- page begins -->
     <div id="page">

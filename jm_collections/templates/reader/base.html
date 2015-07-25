@@ -28,6 +28,7 @@
         {% endblock %}
     </header>
     <!-- local navigation -->
+    {% block nav %}
     <nav>
         <p>
             <a href="{% url 'reader:index' %}">home</a> |
@@ -37,6 +38,7 @@
             {% endif %}
         </p>
     </nav>
+    {% endblock %}
 
     <!-- page begins -->
     <div id="page">

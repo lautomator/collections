@@ -2,6 +2,16 @@
 
 {% block title %}Add{% endblock %}
 
+{% block nav %}
+<nav>
+    <p>
+        <a href="{% url 'books:index' %}">home</a>
+        &nbsp;|&nbsp;
+        <a href="{% url 'books:overview' %}">overview</a>
+    </p>
+</nav>
+{% endblock %}
+
 {% block page %}
     <!-- Details from the publication -->
     <h1>Add:</h1>

@@ -82,3 +82,16 @@ div { margin-bottom: 15px;}
 .button a {
     color: #fff;
 }
+
+.button {
+    background-color: #ffcc00;
+    border-radius: 3px;
+    color: #fff;
+    display: inline;
+    padding: 5px 8px 5px 8px;
+}
+
+.button a,
+.button a:hover {
+    color: #fff;
+}

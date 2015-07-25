@@ -67,6 +67,7 @@ def reader_overview(request):
 @login_required(login_url='/')
 def reader_add(request):
     author = request.user
+    authenticated = True
 
     if request.method == 'POST':
         reader_title = request.POST.get("reader_title", '')
@@ -78,8 +79,8 @@ def reader_add(request):
             context = {
                 'reader_title': reader_title,
                 'author': author,
-                'reader_entry': reader_entry
-            }
+                'reader_entry': reader_entry,
+                'authenticated': authenticated}
             context.update(error)
             return render(request, 'reader/read_write.html', context)
 
@@ -91,6 +92,7 @@ def reader_add(request):
 
             return redirect('/reader/')
 
-    context = {'author': author}
+    context = {'author': author,
+               'authenticated': authenticated}
 
     return render(request, 'reader/read_write.html', context)
