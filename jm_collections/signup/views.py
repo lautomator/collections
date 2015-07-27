@@ -96,7 +96,7 @@ def user_login(request):
         else:
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('/reader')
+            return redirect('/info/about')
 
     return render(request, 'signup/index.html')
 

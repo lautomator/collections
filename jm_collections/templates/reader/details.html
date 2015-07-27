@@ -1,0 +1,16 @@
+{% extends "reader/base.html" %}
+
+{% load humanize %}
+
+{% block title %}Details{% endblock %}
+
+{% block page %}
+    <!-- Details from the reader -->
+    <h1>Reader Details</h1>
+    <ul>
+        <li>Title:<strong> {{ read_details.reader_title }}</strong></li>
+        <li>Author:<strong> {{ read_details.reader_author }}</strong></li>
+        <li>Date: {{ read_details.reader_date|naturalday}}</li>
+        <li>Entry: {{ read_details.reader_entry }}</li>
+    </ul>
+{% endblock %}

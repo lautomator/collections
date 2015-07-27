@@ -5,6 +5,10 @@ from django.contrib.auth.decorators import login_required
 from reader.models import Reader
 
 
+def get_record_details(reader_id):
+    return Reader.objects.get(id=reader_id)
+
+
 def get_queryset():
     ''' Return the last 5 reader entries. '''
 
@@ -62,6 +66,20 @@ def reader_overview(request):
                'authenticated': authenticated}
 
     return render(request, 'reader/overview.html', context)
+
+
+def reader_details(request, reader_id):
+    author = request.user
+    authenticated = False
+    read_details = get_record_details(reader_id)
+
+    if author.is_authenticated():
+        authenticated = True
+
+    context = {'author': author,
+               'read_details': read_details,
+               'authenticated': authenticated}
+    return render(request, 'reader/details.html', context)
 
 
 @login_required(login_url='/')

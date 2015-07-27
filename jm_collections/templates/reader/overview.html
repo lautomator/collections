@@ -23,8 +23,7 @@
             <tr>
                 <td>&nbsp;</td>
                 <td class="v_rule">&ensp;</td>
-                <td class="reader_item">
-                    <strong>{{ item.reader_title }}</strong>
+                <td class="reader_item"><a href="{% url 'reader:details' item.id %}"><strong>{{ item.reader_title }}</strong></a>
                     <br>
                     {{ item.reader_entry }}
                 </td>

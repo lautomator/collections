@@ -80,13 +80,15 @@ def publications_home(request):
     author = request.user
     authenticated = False
     recent_entries = get_queryset()
+    book_path = request.get_full_path()
 
     if author.is_authenticated():
         authenticated = True
 
     context = {'recent_entries': recent_entries,
                'author': author,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'book_path': book_path}
     return render(request, 'books/index.html', context)
 
 

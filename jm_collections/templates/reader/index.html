@@ -12,7 +12,7 @@
         {% for entry in recent_entries %}
             <li>{{ entry.reader_date|naturalday}} | author:
                 {{ entry.reader_author }}</li>
-            <li class="reader_title">{{ entry.reader_title }}</li>
+            <li class="reader_title"><a href="{% url 'reader:details' entry.id %}" >{{ entry.reader_title }}</a></li>
             <li>{{ entry.reader_entry }}</li>
             <li class="reader_entry"></li>
         {% endfor %}
