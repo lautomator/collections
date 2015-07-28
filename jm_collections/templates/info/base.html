@@ -1,13 +1,13 @@
+{% extends "global/global_base.html" %}
+
 {% load staticfiles %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" type="text/css"
-        href="{% static 'css/info/base-styles.css' %}" />
+{% block local_css %}
+<link rel="stylesheet" type="text/css"
+    href="{% static 'css/info/base-styles.css' %}" />
+{% endblock %}
 
-    <title >{% block title %}Info{% endblock %}</title>
-</head>
+{% block title %}Info{% endblock %}
 
 <body>
     <h1 class="page_title">{% block mast %}Info{% endblock %}</h1>
