@@ -79,7 +79,7 @@ def user_signup(request):
             User.objects.create_user(username, email, password)
             print '=== DB QUERY ==='  # TODO: can log a db query
 
-            return redirect('/')
+            return redirect('/signup/login/')
 
     return render(request, 'signup/signup.html')
 
@@ -96,7 +96,7 @@ def user_login(request):
         else:
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('/info/about')
+            return redirect('/')
 
     return render(request, 'signup/login.html')
 

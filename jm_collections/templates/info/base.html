@@ -1,13 +1,11 @@
-{% extends "global/global_base.html" %}
-
 {% load staticfiles %}
 
 {% block local_css %}
 <link rel="stylesheet" type="text/css"
-    href="{% static 'css/info/base-styles.css' %}" />
+    href="{% static 'info/base-styles.css' %}" />
 {% endblock %}
 
-{% block title %}Info{% endblock %}
+<title>Info</title>
 
 <body>
     <h1 class="page_title">{% block mast %}Info{% endblock %}</h1>

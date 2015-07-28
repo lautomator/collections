@@ -1,7 +1,7 @@
 {% extends "signup/base.html" %}
 
 {% block page %}
-        <p>Existing users <a href="{% url 'signup:index' %}">login</a>.</p>
+        <p>Existing users <a href="{% url 'signup:login' %}">login</a>.</p>
         <!-- the signup form -->
         <form method="post">
             {% csrf_token %}
