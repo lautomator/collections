@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'reader/base-styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reader/base-styles.css' %}" />
 
     <title >Reader</title>
 </head>
@@ -16,13 +16,13 @@
         <p class="header_txt">
             <a href="{% url 'books:index' %}" class="header_txt"> Publications</a> |
 
-            <a href="{% url 'info:about' %}" class="header_txt"> About</a> |
+            <a href="{% url 'info:index' %}" class="header_txt"> About</a> |
 
         {% if authenticated %}
             {{ author }} (<a href="{% url 'signup:logout' %}" class="header_txt">logout</a>)
 
         {% else %}
-            <a href="{% url 'signup:index' %}" class="header_txt button">login</a>
+            <a href="{% url 'signup:login' %}" class="header_txt button">login</a>
         {% endif %}
         </p>
         {% endblock %}

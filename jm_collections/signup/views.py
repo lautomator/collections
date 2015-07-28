@@ -92,13 +92,13 @@ def user_login(request):
         if get_user(username, password) is None:
             has_warning = 'invalid login'
             context = {'has_warning': has_warning}
-            return render(request, 'signup/index.html', context)
+            return render(request, 'signup/login.html', context)
         else:
             user = authenticate(username=username, password=password)
             login(request, user)
             return redirect('/info/about')
 
-    return render(request, 'signup/index.html')
+    return render(request, 'signup/login.html')
 
 
 def user_logout(request):

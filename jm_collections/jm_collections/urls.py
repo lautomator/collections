@@ -6,8 +6,8 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
+    url(r'', include('info.urls', namespace="info")),
     url(r'^books/', include('books.urls', namespace="books")),
     url(r'^reader/', include('reader.urls', namespace="reader")),
-    url(r'^info/', include('info.urls', namespace="info")),
-    url(r'', include('signup.urls', namespace="signup")),
+    url(r'^signup/', include('signup.urls', namespace="signup"))
 )

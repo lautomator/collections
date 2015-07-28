@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css"
-        href="{% static 'info/base-styles.css' %}" />
+        href="{% static 'css/info/base-styles.css' %}" />
 
     <title >{% block title %}Info{% endblock %}</title>
 </head>
@@ -23,7 +23,7 @@
             {{ author }} (<a href="{% url 'signup:logout' %}" class="header_txt">logout</a>)
 
         {% else %}
-            <a href="{% url 'signup:index' %}" class="header_txt button">login</a>
+            <a href="{% url 'signup:login' %}" class="header_txt button">login</a>
         {% endif %}
         </p>
         {% endblock %}

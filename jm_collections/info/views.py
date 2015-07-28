@@ -11,4 +11,4 @@ def about(request):
     context = {'author': author,
                'authenticated': authenticated}
 
-    return render(request, 'info/about.html', context)
+    return render(request, 'info/index.html', context)

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'info/base-styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/info/base-styles.css' %}" />
 
     <title >Collections</title>
 </head>
@@ -18,7 +18,7 @@
 
             <a href="{% url 'reader:index' %}" class="header_txt">Reader</a> |
 
-            <a href="{% url 'info:about' %}" class="header_txt"> About</a>
+            <a href="{% url 'info:index' %}" class="header_txt"> About</a>
         </p>
         {% endblock %}
     </header>
