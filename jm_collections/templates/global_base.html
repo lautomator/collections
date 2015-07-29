@@ -30,8 +30,6 @@
     <![endif]-->
 </head>
 
-
-<!-- TODO: from here forward -->
 <body>
 
     <div class="brand">{% block page_title %}Collections{% endblock %}</div>
@@ -56,6 +54,13 @@
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="{% url 'books:index' %}">Publications</a>
+                        <ul>
+                            <li><a href="{% url 'books:index' %}">home</a></li>
+                            <li><a href="{% url 'books:overview' %}">overview</a></li>
+                        {% if authenticated %}
+                            <li><a href="{% url 'books:add' %}" class="button">add a publication</a></li>
+                        {% endif %}
+                        </ul>
                     </li>
                     <li>
                         <a href="{% url 'reader:index' %}">Reader</a>
@@ -78,17 +83,24 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>
+                    {% if authenticated %}
+                        {{ author }} (<a href="{% url 'signup:logout' %}">logout</a>)
+
+                    {% else %}
+                        <a href="{% url 'signup:login' %}">login</a>
+                    {% endif %}
+                    </p>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     <!-- Script to Activate the Carousel (if needed) -->
     <script>

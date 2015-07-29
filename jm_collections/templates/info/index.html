@@ -1,55 +1,41 @@
 {% extends "global_base.html" %}
 
-{% block login %}
+{% block page %}
 
-{% if authenticated %}
-    {{ author }} (<a href="{% url 'signup:logout' %}">logout</a>)
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
 
-{% else %}
-    <a href="{% url 'signup:login' %}">login</a>
-{% endif %}
+                <h2 class="intro-text text-center">Collections:
+                    <strong>About</strong>
+                </h2>
+                <hr>
+                <p>Here are a few Django-powered apps that track inventory and keep notes. They are:</p>
 
-{% endblock %}
-
-{% block container %}
-
-    {% block page %}
-
-        <div class="row">
-            <div class="box">
-                <div class="col-lg-12">
-                    <hr>
-
-                    <h2 class="intro-text text-center">Collections:
-                        <strong>About</strong>
-                    </h2>
-                    <hr>
-                    <p>Here are a few Django-powered apps that track inventory and keep notes. They are:</p>
-
-                    <ul>
-                        <li><u>Publications</u>
-                            <p>Add, delete, and modify publication entries, such as books.</p>
-                            <ul>
-                                <li><strong>home</strong> displays the most recent
-                                    entries (5).</li>
-                                <li><strong>overview</strong> displays every entry.</li>
-                            </ul>
-                        </li>
-                        <li><u>Reader</u>
-                            <p>Add, delete, and modify journal entries.</p>
-                            <ul>
-                                <li><strong>home</strong> displays the most recent
-                                    entries (5).</li>
-                                <li><strong>overview</strong> displays a capsule
-                                    version of every entry.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+                <ul>
+                    <li><u>Publications</u>
+                        <p>Add, delete, and modify publication entries, such as books.</p>
+                        <ul>
+                            <li><strong>home</strong> displays the most recent
+                                entries (5).</li>
+                            <li><strong>overview</strong> displays every entry.</li>
+                        </ul>
+                    </li>
+                    <li><u>Reader</u>
+                        <p>Add, delete, and modify journal entries.</p>
+                        <ul>
+                            <li><strong>home</strong> displays the most recent
+                                entries (5).</li>
+                            <li><strong>overview</strong> displays a capsule
+                                version of every entry.</li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
+    </div>
 
-    {% endblock %}
 {% endblock %}
 
 
