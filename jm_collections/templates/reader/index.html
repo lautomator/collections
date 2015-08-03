@@ -1,23 +1,28 @@
-{% extends "reader/base.html" %}
+{% extends "global_base.html" %}
 
 {% load humanize %}
 
-{% block title %}Home{% endblock %}
+                {%  block heading %}Reader{% endblock %}
+                {% block subheading %}Recent Entries{% endblock%}
 
-{% block page %}
-    <!-- Recent Reader Entries -->
-    <h1>Recent Entries</h1>
-    {% if recent_entries %}
-        <ul>
-        {% for entry in recent_entries %}
-            <li>{{ entry.reader_date|naturalday}} | author:
-                {{ entry.reader_author }}</li>
-            <li class="reader_title"><a href="{% url 'reader:details' entry.id %}" >{{ entry.reader_title }}</a></li>
-            <li>{{ entry.reader_entry }}</li>
-            <li class="reader_entry"></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>There are no entries.</p>
-    {% endif %}
-{% endblock %}
+                {% block page %}
+                <!-- Recent Reader Entries -->
+
+                {% if recent_entries %}
+                {% for entry in recent_entries %}
+                <a href="{% url 'reader:details' entry.id %}" >{{ entry.reader_title }}</a>
+
+                <p class="lead">by: {{ entry.reader_author }}</p>
+
+                <p><span class="glyphicon glyphicon-time"></span> Posted: {{ entry.reader_date|naturalday}}</p>
+
+                <hr>
+
+                <p>{{ entry.reader_entry }}</p>
+                {% endfor %}
+
+                {% else %}
+                <p>There are no entries.</p>
+                {% endif %}
+
+                {% endblock %}
