@@ -1,16 +1,20 @@
-{% extends "reader/base.html" %}
+{% extends "global_base.html" %}
 
 {% load humanize %}
 
-{% block title %}Details{% endblock %}
+{% block heading %}Reader{% endblock %}
+{% block subheading %}Details{% endblock%}
 
 {% block page %}
     <!-- Details from the reader -->
-    <h1>Reader Details</h1>
-    <ul>
-        <li>Title:<strong> {{ read_details.reader_title }}</strong></li>
-        <li>Author:<strong> {{ read_details.reader_author }}</strong></li>
-        <li>Date: {{ read_details.reader_date|naturalday}}</li>
-        <li>Entry: {{ read_details.reader_entry }}</li>
-    </ul>
+    <p>
+        <span class="glyphicon glyphicon-time"></span> {{ read_details.reader_date|naturalday }} | {{ read_details.reader_author }}<br>
+        <span class="lead"><strong>{{ read_details.reader_title }}</strong></span><br>
+        {{ read_details.reader_entry }}
+    </p>
+
+    {% if authenticated %}
+    <a class="btn btn-primary" href="{% url 'reader:add' %}"><span class="glyphicon glyphicon-pencil"></span> edit</a>
+    {% endif %}
+
 {% endblock %}

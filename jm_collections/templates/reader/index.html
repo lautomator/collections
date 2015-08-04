@@ -2,27 +2,27 @@
 
 {% load humanize %}
 
-                {%  block heading %}Reader{% endblock %}
-                {% block subheading %}Recent Entries{% endblock%}
+{% block heading %}Reader{% endblock %}
+{% block subheading %}Recent Entries{% endblock%}
 
-                {% block page %}
-                <!-- Recent Reader Entries -->
+{% block page %}
 
-                {% if recent_entries %}
-                {% for entry in recent_entries %}
-                <a href="{% url 'reader:details' entry.id %}" >{{ entry.reader_title }}</a>
+{% if recent_entries %}
+    <!-- Recent Reader Entries -->
+    {% for entry in recent_entries %}
 
-                <p class="lead">by: {{ entry.reader_author }}</p>
+    <p><span class="glyphicon glyphicon-time"></span> Posted: {{ entry.reader_date|naturalday}} by {{ entry.reader_author }}<br>
 
-                <p><span class="glyphicon glyphicon-time"></span> Posted: {{ entry.reader_date|naturalday}}</p>
+    <span class="lead"><a href="{% url 'reader:details' entry.id %}" >{{ entry.reader_title }}</a></span></p>
 
-                <hr>
+    <p>{{ entry.reader_entry }}</p>
 
-                <p>{{ entry.reader_entry }}</p>
-                {% endfor %}
+    <hr>
 
-                {% else %}
-                <p>There are no entries.</p>
-                {% endif %}
+    {% endfor %}
 
-                {% endblock %}
+    {% else %}
+    <p>There are no entries.</p>
+    {% endif %}
+
+{% endblock %}

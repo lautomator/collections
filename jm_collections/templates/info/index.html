@@ -1,30 +1,16 @@
 {% extends "global_base.html" %}
 
-                {%  block heading %}About{% endblock %}
-                {% block subheading %}{% endblock%}
+{%  block heading %}About{% endblock %}
+{% block subheading %}{% endblock%}
 
-                {% block page %}
+{% block page %}
 
-                <p>Here are a few Django-powered apps that track inventory and keep notes. They are:</p>
+    <p>Here are a few <em>Django-powered</em> apps that track inventory and keep notes.</p>
 
-                <ul>
-                    <li><u>Publications</u>
-                        <p>Add, delete, and modify publication entries, such as books.</p>
-                        <ul>
-                            <li><strong>home</strong> displays the most recent
-                                entries (5).</li>
-                            <li><strong>overview</strong> displays every entry.</li>
-                        </ul>
-                    </li>
-                    <li><u>Reader</u>
-                        <p>Add, delete, and modify journal entries.</p>
-                        <ul>
-                            <li><strong>home</strong> displays the most recent
-                                entries (5).</li>
-                            <li><strong>overview</strong> displays a capsule
-                                version of every entry.</li>
-                        </ul>
-                    </li>
-                </ul>
+    <p> <span class="lead"><a href="{% url 'books:index' %}">Publications</a></span><br>
+    Add, delete, and modify publication entries, such as books.</p>
 
-                {% endblock %}
+    <p> <span class="lead"><a href="{% url 'reader:index' %}">Reader</a></span><br>
+    Add, delete, and modify journal entries.</p>
+
+{% endblock %}

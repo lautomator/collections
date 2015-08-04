@@ -91,12 +91,11 @@
                 {% block column %}
 
                 <h1 class="page-header">
-                    {%  block heading %}Page Heading{% endblock %}
-                    <small>{% block subheading %}Secondary Text{% endblock%}</small>
+                    {% block heading %}{% endblock %}
+                    <small>{% block subheading %}{% endblock%}</small>
                 </h1>
 
                 {% block page %}{% endblock %}
-                <hr>
 
                 {% endblock %}
             </div>
@@ -117,7 +116,7 @@
         </div>
         <!-- /.row -->
 
-        <!-- <hr> -->
+        <hr>
 
         <!-- Footer -->
         <footer>
