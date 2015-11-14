@@ -16,15 +16,15 @@ To get this going:
 - Adjust Django settings, accordingly
 - Install virtualenv and install the requirements:
 
-```
+``
 source venv/bin/activate
 pip install -r requirements.txt
 
-```
+``
 - Run the Django server
 
-```
+``
 python jm_collections/manage.py runserver
-```
+``
 
 If all goes well you can create a user account to work with locally. If not, check the database configuration, including the connection and dev passwords. Be sure all of the virtualenv requirements are set.
