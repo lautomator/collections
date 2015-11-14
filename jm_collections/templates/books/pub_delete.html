@@ -21,9 +21,9 @@
         {% csrf_token %}
         <p>Are you sure you want to delete <strong>{{ pub.title }}</strong>?</p>
         <!-- confirm -->
-        <input type="submit" value="confirm" /><br>
+        <input class="btn btn-danger" type="submit" value="confirm" />
         <!-- cancel -->
         <a href="{% url 'books:overview' %}">
-        <input type="button" value="cancel" /><a>
+        <input class="btn btn-default" type="button" value="cancel" /><a>
     </form>
 {% endblock %}

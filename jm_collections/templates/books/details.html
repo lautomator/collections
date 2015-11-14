@@ -10,7 +10,6 @@
         <li>Author:<strong> {{ pub_details.author }}</strong></li>
         <li>Publication Date: {{ pub_details.pub_date }}</li>
         <li>Category: {{ pub_details.category }}</li>
-        <li class="button"><a href="{% url 'books:edit' pub_details.id %}">
-        	edit</a></li>
     </ul>
+    <a class="btn btn-primary" href="{% url 'books:edit' pub_details.id %}"><span class="glyphicon glyphicon-pencil"></span> edit</a>
 {% endblock %}

@@ -64,14 +64,15 @@
         <div>
             <br>
             <!-- update -->
-            <input type="submit" value="update" /><br>
+            <input class="btn btn-success" type="submit" value="update" />
             <!-- cancel -->
             <a href="{% url 'books:overview' %}">
-            <input type="button" value="cancel" /><a><br>
+            <input class="btn btn-default" type="button" value="cancel" /><a>
             <!-- delete -->
             <a href="{% url 'books:delete' pub.id %}">
-            <input type="button" value="delete" /></a><br>
-            <cite>You will be asked to confirm on the next page.</cite>
+            <input class="btn btn-default" type="button" value="delete" /></a>
+
+            <p><cite>You will be asked to confirm on the next page.</cite></p>
         </div>
     </form>
 {% endblock %}
