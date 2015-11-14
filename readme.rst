@@ -9,16 +9,20 @@ They are:
 * Reader: blog
 * About (a static page)
 
-##Setup
+Setup
+=====
 To get this going:
-* Install Postgres and create a database locally
-* Adjust Django settings, accordingly
-* Install virtualenv and install the requirements:
+- Install Postgres and create a database locally
+- Adjust Django settings, accordingly
+- Install virtualenv and install the requirements:
+
 ```
 source venv/bin/activate
 pip install -r requirements.txt
+
 ```
-* Run the Django server
+- Run the Django server
+
 ```
 python jm_collections/manage.py runserver
 ```
