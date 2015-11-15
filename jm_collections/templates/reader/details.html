@@ -14,7 +14,7 @@
     </p>
 
     {% if authenticated %}
-    <a class="btn btn-primary" href="{% url 'reader:add' %}"><span class="glyphicon glyphicon-pencil"></span> edit</a>
+    <a class="btn btn-primary" href="{% url 'reader:edit' read_details.id %}"><span class="glyphicon glyphicon-pencil"></span> edit</a>
     {% endif %}
 
 {% endblock %}

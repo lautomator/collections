@@ -114,3 +114,42 @@ def reader_add(request):
                'authenticated': authenticated}
 
     return render(request, 'reader/read_write.html', context)
+
+
+@login_required(login_url='/')
+def reader_edit(request, reader_id):
+    author = request.user
+    authenticated = True
+    read_details = get_record_details(reader_id)
+
+    if request.method == 'POST':
+        reader_title = request.POST.get("reader_title", '')
+        reader_entry = request.POST.get("reader_entry", '')
+
+        error = check_entries(reader_title, reader_entry)
+
+        if error:
+            context = {
+                'reader_title': reader_title,
+                'author': author,
+                'reader_entry': reader_entry,
+                'authenticated': authenticated}
+            context.update(error)
+            return render(request, 'reader/read_edit.html', context)
+
+        else:
+            r = Reader.objects
+            r.update(reader_title=reader_title,
+                     reader_author=author,
+                     reader_entry=reader_entry)
+
+            return redirect('/reader/')
+
+    context = {
+        'read_details': read_details,
+        'reader_id': reader_id,
+        'authenticated': authenticated,
+        'author': author
+    }
+
+    return render(request, 'reader/read_edit.html', context)

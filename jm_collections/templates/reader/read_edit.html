@@ -1,10 +1,10 @@
 {% extends "global_base.html" %}
 
-{% block title %}Add{% endblock %}
+{% block title %}Edit{% endblock %}
 
 {% block page %}
     <!-- Details from the publication -->
-    <h1>Add:</h1>
+    <h1>Edit:</h1>
 
     <form method="post">
         {% csrf_token %}
@@ -19,14 +19,14 @@
             <tr>
                 <td><label>Title&nbsp;&nbsp;</label></td>
                 <td>
-                    <input type="text" name="reader_title" value="{{ reader_title }}">
+                    <input type="text" name="reader_title" value="{{ read_details.reader_title }}">
                     <p class="has_warning">{{ error_reader_title }}</p>
                 </td>
             </tr>
 
             <tr>
                 <td><label>Entry&nbsp;&nbsp;</label></td>
-                <td><textarea rows="10" placeholder="enter text..." name="reader_entry">{{ reader_entry }}</textarea>
+                <td><textarea rows="10" placeholder="enter text..." name="reader_entry">{{ read_details.reader_entry }}</textarea>
                 <p class="has_warning">{{ error_reader_entry }}</p></td>
             </tr>
         </table>
@@ -34,7 +34,7 @@
 
         <!-- update -->
         <div>
-            <input class="btn btn-success" type="submit" value="add entry" />
+            <input class="btn btn-success" type="submit" value="update entry" />
             <!-- cancel -->
             <a href="{% url 'reader:index' %}">
             <input class="btn btn-default" type="button" value="cancel" /><a><br>
