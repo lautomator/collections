@@ -138,10 +138,12 @@ def reader_edit(request, reader_id):
             return render(request, 'reader/read_edit.html', context)
 
         else:
-            r = Reader.objects
-            r.update(reader_title=reader_title,
-                     reader_author=author,
-                     reader_entry=reader_entry)
+            # update the record
+            read_details.reader_title = reader_title
+            read_details.reader_author = author
+            read_details.reader_entry = reader_entry
+
+            read_details.save()
 
             return redirect('/reader/')
 
@@ -153,3 +155,8 @@ def reader_edit(request, reader_id):
     }
 
     return render(request, 'reader/read_edit.html', context)
+
+
+@login_required(login_url='/')
+def reader_delete(request, reader_id):
+    return render(request, 'reader/read_delete.html', '')

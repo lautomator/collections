@@ -34,10 +34,16 @@
 
         <!-- update -->
         <div>
+            <!-- update -->
             <input class="btn btn-success" type="submit" value="update entry" />
             <!-- cancel -->
             <a href="{% url 'reader:index' %}">
-            <input class="btn btn-default" type="button" value="cancel" /><a><br>
+            <input class="btn btn-default" type="button" value="cancel" /><a>
+            <!-- delete -->
+            <a href="{% url 'reader:delete' reader_id %}">
+            <input class="btn btn-default" type="button" value="delete" /></a>
+
+            <p><cite>You will be asked to confirm on the next page.</cite></p>
         </div>
     </form>
 {% endblock %}

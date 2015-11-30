@@ -11,10 +11,10 @@ urlpatterns = patterns(
         name='details'),
     # /books/overview/
     url(r'^overview/$', views.publication_overview, name='overview'),
-    # /books/<pub_id>/edit/
-    url(r'^(?P<pub_id>\d+)/edit/$', views.publication_edit, name='edit'),
     # /books/add/
     url(r'^add/$', views.publication_add, name='add'),
+    # /books/<pub_id>/edit/
+    url(r'^(?P<pub_id>\d+)/edit/$', views.publication_edit, name='edit'),
     # /books/<pub_id>/delete/
     url(r'^(?P<pub_id>\d+)/delete/$', views.publication_delete,
         name='delete')

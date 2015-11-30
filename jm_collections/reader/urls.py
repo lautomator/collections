@@ -14,5 +14,8 @@ urlpatterns = patterns(
     # /reader/add/
     url(r'^add/$', views.reader_add, name='add'),
     # /reader/<reader_id>/edit/
-    url(r'^(?P<reader_id>\d+)/edit/$', views.reader_edit, name='edit')
+    url(r'^(?P<reader_id>\d+)/edit/$', views.reader_edit, name='edit'),
+    # /reader/<reader_id>/delete/
+    url(r'^(?P<reader_id>\d+)/delete/$', views.reader_delete,
+        name='delete')
 )
