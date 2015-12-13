@@ -4,12 +4,27 @@
 
 {% block nav %}
 
-<!-- todo -->
-
+<nav>
+    <p>
+        <a href="{% url 'reader:index' %}">home</a>
+        &nbsp;|&nbsp;
+        <a href="{% url 'reader:overview' %}">overview</a>
+    </p>
+</nav>
 {% endblock %}
 
 {% block page %}
+    <!-- Details from the reader entry -->
+    <h1>Delete:</h1>
+    <h2>{{ read_details.reader_title }}</h2>
 
-<!-- todo -->
-
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete <strong>{{ read_details.reader_title }}</strong>?</p>
+        <!-- confirm -->
+        <input class="btn btn-danger" type="submit" value="confirm" />
+        <!-- cancel -->
+        <a href="{% url 'reader:overview' %}">
+        <input class="btn btn-default" type="button" value="cancel" /><a>
+    </form>
 {% endblock %}

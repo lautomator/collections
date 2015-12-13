@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-
 from reader.models import Reader
 
 
@@ -123,25 +122,24 @@ def reader_edit(request, reader_id):
     read_details = get_record_details(reader_id)
 
     if request.method == 'POST':
-        reader_title = request.POST.get("reader_title", '')
-        reader_entry = request.POST.get("reader_entry", '')
+        read_title = request.POST.get("reader_title", '')
+        read_entry = request.POST.get("reader_entry", '')
 
-        error = check_entries(reader_title, reader_entry)
+        error = check_entries(read_title, read_entry)
 
         if error:
             context = {
-                'reader_title': reader_title,
+                'reader_title': read_title,
                 'author': author,
-                'reader_entry': reader_entry,
+                'reader_entry': read_entry,
                 'authenticated': authenticated}
             context.update(error)
             return render(request, 'reader/read_edit.html', context)
 
         else:
             # update the record
-            read_details.reader_title = reader_title
-            read_details.reader_author = author
-            read_details.reader_entry = reader_entry
+            read_details.reader_title = read_title
+            read_details.reader_entry = read_entry
 
             read_details.save()
 
@@ -159,4 +157,18 @@ def reader_edit(request, reader_id):
 
 @login_required(login_url='/')
 def reader_delete(request, reader_id):
-    return render(request, 'reader/read_delete.html', '')
+    author = request.user
+    authenticated = True
+    read_details = get_record_details(reader_id)
+
+    if request.method == 'POST':
+
+        read_details.delete()
+
+        return redirect('/reader/overview/')
+
+    context = {'author': author,
+               'read_details': read_details,
+               'authenticated': authenticated}
+
+    return render(request, 'reader/read_delete.html', context)
