@@ -1,4 +1,5 @@
 import re
+import random
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -74,10 +75,22 @@ def check_entries(title, author, date):
         return params
 
 
+def get_featured():
+    # get the publications
+    pubs = get_queryset_all()
+    # get the lenght of the publications list
+    pub_length = len(pubs) - 1
+    # random number
+    ran_pub_index = random.randint(0, pub_length)
+
+    return pubs[ran_pub_index].title
+
+
 def publications_home(request):
     author = request.user
     authenticated = False
     recent_entries = get_queryset()
+    featured = get_featured()
 
     # get the full path of the current page
     # book_path = request.get_full_path()
@@ -87,7 +100,8 @@ def publications_home(request):
 
     context = {'recent_entries': recent_entries,
                'author': author,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured}
     return render(request, 'books/index.html', context)
 
 
@@ -95,13 +109,15 @@ def publication_details(request, pub_id):
     author = request.user
     authenticated = False
     pub_details = get_record_details(pub_id)
+    featured = get_featured()
 
     if author.is_authenticated():
         authenticated = True
 
     context = {'author': author,
                'pub_details': pub_details,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured}
     return render(request, 'books/details.html', context)
 
 
@@ -109,13 +125,15 @@ def publication_overview(request):
     author = request.user
     authenticated = False
     all_items = get_queryset_all()
+    featured = get_featured()
 
     if author.is_authenticated():
         authenticated = True
 
     context = {'author': author,
                'all_items': all_items,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured}
     return render(request, 'books/overview.html', context)
 
 
@@ -127,6 +145,7 @@ def publication_edit(request, pub_id):
     current_category = pub.category  # ex., VIS
     categories = get_categories()  # ex., [Visual Arts, ..., ...]
     current_category_ln = get_long_category(current_category)
+    featured = get_featured()
 
     if request.method == 'POST':
         title = request.POST.get("publication_title", '')
@@ -140,7 +159,8 @@ def publication_edit(request, pub_id):
             context = {'author': author,
                        'pub': pub,
                        'categories': categories,
-                       'authenticated': authenticated}
+                       'authenticated': authenticated,
+                       'featured': featured}
 
             context.update(error)
             return render(request, 'books/pub_edit.html', context)
@@ -161,7 +181,8 @@ def publication_edit(request, pub_id):
                'categories': categories,
                'current_category': current_category,
                'current_category_ln': current_category_ln,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured}
     return render(request, 'books/pub_edit.html', context)
 
 
@@ -170,6 +191,7 @@ def publication_add(request):
     author = request.user
     authenticated = True
     categories = get_categories()
+    featured = get_featured()
 
     if request.method == 'POST':
         title = request.POST.get("publication_title", '')
@@ -186,7 +208,8 @@ def publication_add(request):
                        'publication_date': pub_date,
                        'chosen_category': chosen_category,
                        'categories': categories,
-                       'authenticated': authenticated}
+                       'authenticated': authenticated,
+                       'featured': featured}
 
             context.update(error)
             return render(request, 'books/pub_add.html', context)
@@ -204,7 +227,8 @@ def publication_add(request):
 
     context = {'author': author,
                'categories': categories,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured}
     return render(request, 'books/pub_add.html', context)
 
 
@@ -213,6 +237,7 @@ def publication_delete(request, pub_id):
     author = request.user
     authenticated = True
     pub = get_record_details(pub_id)
+    featured = get_featured()
 
     if request.method == 'POST':
 
@@ -222,5 +247,6 @@ def publication_delete(request, pub_id):
 
     context = {'author': author,
                'pub': pub,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured}
     return render(request, 'books/pub_delete.html', context)

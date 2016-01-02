@@ -107,12 +107,11 @@
                 <!-- Side Widget Well -->
                 <div class="well">
                     <h4>Featured</h4>
-                    <p>This could be a random entry from any of the listings...</p>
+                    <p>{% block featured %}{{ featured }}{% endblock%}</p>
                 </div>
 
                 {% endblock %}
             </div>
-
         </div>
         <!-- /.row -->
 
