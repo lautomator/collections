@@ -39,30 +39,45 @@ def check_entries(title, entry):
 
 
 def get_featured():
+    ''' return a random featured title, url, and id '''
     # get the reader entries
     entries = get_queryset_all()
-    # get the length of the entries list
-    entry_length = len(entries) - 1
-    # random number
-    ran_entry_index = random.randint(0, entry_length)
 
-    return entries[ran_entry_index].reader_title
+    # get all of the available IDs
+    reader_ids = []
+    for i in entries:
+        reader_ids.append(i.id)
+
+    # get 1 random id
+    random_id = random.choice(reader_ids)
+
+    # get the title from the random entry
+    featured_title = entries.get(id=random_id).reader_title
+
+    params = {
+        'title': featured_title,
+        'site': 'reader:details',
+        'q': random_id
+    }
+
+    return params
 
 
 def reader_home(request):
     author = request.user
     authenticated = False
     featured = get_featured()
+    recent_entries = get_queryset()
 
     if author.is_authenticated():
         authenticated = True
 
-    recent_entries = get_queryset()
-    context = {'recent_entries': recent_entries,
-               'author': author,
-               'authenticated': authenticated,
-               'featured': featured
-               }
+    context = {
+        'recent_entries': recent_entries,
+        'author': author,
+        'authenticated': authenticated,
+        'featured_item': featured
+    }
 
     return render(request, 'reader/index.html', context)
 
@@ -76,11 +91,12 @@ def reader_overview(request):
     if author.is_authenticated():
         authenticated = True
 
-    context = {'all_items': all_items,
-               'author': author,
-               'authenticated': authenticated,
-               'featured': featured
-               }
+    context = {
+        'all_items': all_items,
+        'author': author,
+        'authenticated': authenticated,
+        'featured_item': featured
+    }
 
     return render(request, 'reader/overview.html', context)
 
@@ -97,7 +113,7 @@ def reader_details(request, reader_id):
     context = {'author': author,
                'read_details': read_details,
                'authenticated': authenticated,
-               'featured': featured
+               'featured_item': featured
                }
 
     return render(request, 'reader/details.html', context)
@@ -107,7 +123,7 @@ def reader_details(request, reader_id):
 def reader_add(request):
     author = request.user
     authenticated = True
-    featured = get_featured()
+    has_no_sidebar = True
 
     if request.method == 'POST':
         reader_title = request.POST.get("reader_title", '')
@@ -121,7 +137,8 @@ def reader_add(request):
                 'author': author,
                 'reader_entry': reader_entry,
                 'authenticated': authenticated,
-                'featured': featured}
+                'has_no_sidebar': has_no_sidebar
+            }
             context.update(error)
             return render(request, 'reader/read_write.html', context)
 
@@ -133,9 +150,11 @@ def reader_add(request):
 
             return redirect('/reader/')
 
-    context = {'author': author,
-               'authenticated': authenticated,
-               'featured': featured}
+    context = {
+        'author': author,
+        'authenticated': authenticated,
+        'has_no_sidebar': has_no_sidebar
+    }
 
     return render(request, 'reader/read_write.html', context)
 
@@ -145,7 +164,7 @@ def reader_edit(request, reader_id):
     author = request.user
     authenticated = True
     read_details = get_record_details(reader_id)
-    featured = get_featured()
+    has_no_sidebar = True
 
     if request.method == 'POST':
         read_title = request.POST.get("reader_title", '')
@@ -159,7 +178,8 @@ def reader_edit(request, reader_id):
                 'author': author,
                 'reader_entry': read_entry,
                 'authenticated': authenticated,
-                'featured': featured}
+                'has_no_sidebar': has_no_sidebar
+            }
 
             context.update(error)
             return render(request, 'reader/read_edit.html', context)
@@ -178,7 +198,7 @@ def reader_edit(request, reader_id):
         'reader_id': reader_id,
         'authenticated': authenticated,
         'author': author,
-        'featured': featured
+        'has_no_sidebar': has_no_sidebar
     }
 
     return render(request, 'reader/read_edit.html', context)
@@ -189,7 +209,7 @@ def reader_delete(request, reader_id):
     author = request.user
     authenticated = True
     read_details = get_record_details(reader_id)
-    featured = get_featured()
+    has_no_sidebar = True
 
     if request.method == 'POST':
 
@@ -197,9 +217,11 @@ def reader_delete(request, reader_id):
 
         return redirect('/reader/overview/')
 
-    context = {'author': author,
-               'read_details': read_details,
-               'authenticated': authenticated,
-               'featured': featured}
+    context = {
+        'author': author,
+        'read_details': read_details,
+        'authenticated': authenticated,
+        'has_no_sidebar': has_no_sidebar
+    }
 
     return render(request, 'reader/read_delete.html', context)

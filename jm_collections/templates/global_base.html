@@ -111,7 +111,7 @@
                 <!-- Side Widget Well -->
                 <div class="well">
                     <h3>Featured</h3>
-                    <p>{% block featured %}{{ featured }}{% endblock%}</p>
+                    <h4>{% block featured %}<a href="{% url featured_item.site featured_item.q %}">{{ featured_item.title }}</a>{% endblock%}</h4>
                 </div>
 
                 {% endblock %}
