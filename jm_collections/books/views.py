@@ -78,7 +78,7 @@ def check_entries(title, author, date):
 def get_featured():
     # get the publications
     pubs = get_queryset_all()
-    # get the lenght of the publications list
+    # get the length of the publications list
     pub_length = len(pubs) - 1
     # random number
     ran_pub_index = random.randint(0, pub_length)

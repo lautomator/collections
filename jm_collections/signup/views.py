@@ -61,6 +61,7 @@ def user_signup(request):
     password = request.POST.get("password", '')
     verify = request.POST.get("verify", '')
     email = request.POST.get("email", '')
+    has_no_sidebar = True
 
     if username or password or email or verify:
         error = check_signup(username, password, verify, email)
@@ -70,7 +71,8 @@ def user_signup(request):
                 'username': username,
                 'password': password,
                 'verify': verify,
-                'email': email
+                'email': email,
+                'has_no_sidebar': has_no_sidebar
             }
             context.update(error)
             # has warnings; re-render the page with warnings
@@ -81,26 +83,34 @@ def user_signup(request):
 
             return redirect('/')
 
-    return render(request, 'signup/signup.html')
+    context = {'has_no_sidebar': has_no_sidebar}
+
+    return render(request, 'signup/signup.html', context)
 
 
 def user_login(request):
+    has_no_sidebar = True
+    context = {'has_no_sidebar': has_no_sidebar}
+
     if request.method == 'POST':
         username = request.POST.get("username", '')
         password = request.POST.get("password", '')
 
         if get_user(username, password) is None:
             has_warning = 'invalid login'
-            context = {'has_warning': has_warning}
+            context = {'has_warning': has_warning,
+                       'has_no_sidebar': has_no_sidebar}
             return render(request, 'signup/login.html', context)
         else:
             user = authenticate(username=username, password=password)
             login(request, user)
             return redirect('/')
 
-    return render(request, 'signup/login.html')
+    return render(request, 'signup/login.html', context)
 
 
 def user_logout(request):
+    has_no_sidebar = True
+    context = {'has_no_sidebar': has_no_sidebar}
     logout(request)
-    return render(request, 'signup/logout.html')
+    return render(request, 'signup/logout.html', context)

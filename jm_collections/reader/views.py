@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -37,9 +38,21 @@ def check_entries(title, entry):
         return params
 
 
+def get_featured():
+    # get the reader entries
+    entries = get_queryset_all()
+    # get the length of the entries list
+    entry_length = len(entries) - 1
+    # random number
+    ran_entry_index = random.randint(0, entry_length)
+
+    return entries[ran_entry_index].reader_title
+
+
 def reader_home(request):
     author = request.user
     authenticated = False
+    featured = get_featured()
 
     if author.is_authenticated():
         authenticated = True
@@ -47,7 +60,9 @@ def reader_home(request):
     recent_entries = get_queryset()
     context = {'recent_entries': recent_entries,
                'author': author,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured
+               }
 
     return render(request, 'reader/index.html', context)
 
@@ -55,14 +70,17 @@ def reader_home(request):
 def reader_overview(request):
     author = request.user
     authenticated = False
-    all_items = get_queryset_all()
+    all_items = get_queryset_all
+    featured = get_featured()
 
     if author.is_authenticated():
         authenticated = True
 
     context = {'all_items': all_items,
                'author': author,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured
+               }
 
     return render(request, 'reader/overview.html', context)
 
@@ -71,13 +89,17 @@ def reader_details(request, reader_id):
     author = request.user
     authenticated = False
     read_details = get_record_details(reader_id)
+    featured = get_featured()
 
     if author.is_authenticated():
         authenticated = True
 
     context = {'author': author,
                'read_details': read_details,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured
+               }
+
     return render(request, 'reader/details.html', context)
 
 
@@ -85,6 +107,7 @@ def reader_details(request, reader_id):
 def reader_add(request):
     author = request.user
     authenticated = True
+    featured = get_featured()
 
     if request.method == 'POST':
         reader_title = request.POST.get("reader_title", '')
@@ -97,7 +120,8 @@ def reader_add(request):
                 'reader_title': reader_title,
                 'author': author,
                 'reader_entry': reader_entry,
-                'authenticated': authenticated}
+                'authenticated': authenticated,
+                'featured': featured}
             context.update(error)
             return render(request, 'reader/read_write.html', context)
 
@@ -110,7 +134,8 @@ def reader_add(request):
             return redirect('/reader/')
 
     context = {'author': author,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured}
 
     return render(request, 'reader/read_write.html', context)
 
@@ -120,6 +145,7 @@ def reader_edit(request, reader_id):
     author = request.user
     authenticated = True
     read_details = get_record_details(reader_id)
+    featured = get_featured()
 
     if request.method == 'POST':
         read_title = request.POST.get("reader_title", '')
@@ -132,7 +158,9 @@ def reader_edit(request, reader_id):
                 'reader_title': read_title,
                 'author': author,
                 'reader_entry': read_entry,
-                'authenticated': authenticated}
+                'authenticated': authenticated,
+                'featured': featured}
+
             context.update(error)
             return render(request, 'reader/read_edit.html', context)
 
@@ -149,7 +177,8 @@ def reader_edit(request, reader_id):
         'read_details': read_details,
         'reader_id': reader_id,
         'authenticated': authenticated,
-        'author': author
+        'author': author,
+        'featured': featured
     }
 
     return render(request, 'reader/read_edit.html', context)
@@ -160,6 +189,7 @@ def reader_delete(request, reader_id):
     author = request.user
     authenticated = True
     read_details = get_record_details(reader_id)
+    featured = get_featured()
 
     if request.method == 'POST':
 
@@ -169,6 +199,7 @@ def reader_delete(request, reader_id):
 
     context = {'author': author,
                'read_details': read_details,
-               'authenticated': authenticated}
+               'authenticated': authenticated,
+               'featured': featured}
 
     return render(request, 'reader/read_delete.html', context)

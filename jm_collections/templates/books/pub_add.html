@@ -12,11 +12,12 @@
 </nav>
 {% endblock %}
 
+{% block heading %}Add{% endblock %}
+
 {% block page %}
     <!-- Details from the publication -->
-    <h1>Add:</h1>
 
-    <form action="" method="post">
+    <form method="post">
         {% csrf_token %}
 
         <table>
@@ -24,7 +25,7 @@
                 <td><label>Title&nbsp;&nbsp;</label></td>
                 <td>
                     <input type="text" name="publication_title" value="{{ publication_title }}">
-                    <p>{{ error_publication_title }}</p>
+                    <p class="has_warning">{{ error_publication_title }}</p>
                 </td>
             </tr>
 
@@ -32,7 +33,7 @@
                 <td><label>Author&nbsp;&nbsp;</label></td>
                 <td>
                     <input type="text" name="publication_author" value="{{ publication_author }}">
-                    <p>{{ error_publication_author }}</p>
+                    <p class="has_warning">{{ error_publication_author }}</p>
                 </td>
             </tr>
 
@@ -40,7 +41,7 @@
                 <td><label>Pub date&nbsp;&nbsp;</label></td>
                 <td>
                     <input type="text" name="publication_date" value="{{ publication_date }}">
-                    <p>{{ error_publication_date }}</p>
+                    <p class="has_warning">{{ error_publication_date }}</p>
                 </td>
             </tr>
 
@@ -66,7 +67,8 @@
             <input class="btn btn-success" type="submit" value="add publication" />
             <!-- cancel -->
             <a href="{% url 'books:overview' %}">
-            <input class="btn btn-default" type="button" value="cancel" /></a><br>
+            <input id="pub-cancel" class="btn btn-default" type="button" value="cancel" /></a><br>
         </div>
     </form>
 {% endblock %}
+
