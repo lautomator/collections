@@ -76,14 +76,28 @@ def check_entries(title, author, date):
 
 
 def get_featured():
-    # get the publications
+    ''' return a random featured title, url, and id '''
+    # get the book entries
     pubs = get_queryset_all()
-    # get the length of the publications list
-    pub_length = len(pubs) - 1
-    # random number
-    ran_pub_index = random.randint(0, pub_length)
 
-    return pubs[ran_pub_index].title
+    # get all of the available IDs
+    pub_ids = []
+    for i in pubs:
+        pub_ids.append(i.id)
+
+    # get 1 random id
+    random_id = random.choice(pub_ids)
+
+    # get the title from the random entry
+    featured_title = pubs.get(id=random_id).title
+
+    params = {
+        'title': featured_title,
+        'site': 'books:details',
+        'q': random_id
+    }
+
+    return params
 
 
 def publications_home(request):
@@ -98,10 +112,12 @@ def publications_home(request):
     if author.is_authenticated():
         authenticated = True
 
-    context = {'recent_entries': recent_entries,
-               'author': author,
-               'authenticated': authenticated,
-               'featured': featured}
+    context = {
+        'recent_entries': recent_entries,
+        'author': author,
+        'authenticated': authenticated,
+        'featured_item': featured
+    }
     return render(request, 'books/index.html', context)
 
 
@@ -114,10 +130,12 @@ def publication_details(request, pub_id):
     if author.is_authenticated():
         authenticated = True
 
-    context = {'author': author,
-               'pub_details': pub_details,
-               'authenticated': authenticated,
-               'featured': featured}
+    context = {
+        'author': author,
+        'pub_details': pub_details,
+        'authenticated': authenticated,
+        'featured_item': featured
+    }
     return render(request, 'books/details.html', context)
 
 
@@ -130,10 +148,12 @@ def publication_overview(request):
     if author.is_authenticated():
         authenticated = True
 
-    context = {'author': author,
-               'all_items': all_items,
-               'authenticated': authenticated,
-               'featured': featured}
+    context = {
+        'author': author,
+        'all_items': all_items,
+        'authenticated': authenticated,
+        'featured_item': featured
+    }
     return render(request, 'books/overview.html', context)
 
 
@@ -156,11 +176,13 @@ def publication_edit(request, pub_id):
         error = check_entries(title, pub_author, pub_date)
 
         if error:
-            context = {'author': author,
-                       'pub': pub,
-                       'categories': categories,
-                       'authenticated': authenticated,
-                       'featured': featured}
+            context = {
+                'author': author,
+                'pub': pub,
+                'categories': categories,
+                'authenticated': authenticated,
+                'featured_item': featured
+            }
 
             context.update(error)
             return render(request, 'books/pub_edit.html', context)
@@ -176,13 +198,15 @@ def publication_edit(request, pub_id):
 
             return redirect('/books/overview/')
 
-    context = {'author': author,
-               'pub': pub,
-               'categories': categories,
-               'current_category': current_category,
-               'current_category_ln': current_category_ln,
-               'authenticated': authenticated,
-               'featured': featured}
+    context = {
+        'author': author,
+        'pub': pub,
+        'categories': categories,
+        'current_category': current_category,
+        'current_category_ln': current_category_ln,
+        'authenticated': authenticated,
+        'featured_item': featured
+    }
     return render(request, 'books/pub_edit.html', context)
 
 
@@ -202,14 +226,16 @@ def publication_add(request):
         error = check_entries(title, pub_author, pub_date)
 
         if error:
-            context = {'author': author,
-                       'publication_title': title,
-                       'publication_author': pub_author,
-                       'publication_date': pub_date,
-                       'chosen_category': chosen_category,
-                       'categories': categories,
-                       'authenticated': authenticated,
-                       'featured': featured}
+            context = {
+                'author': author,
+                'publication_title': title,
+                'publication_author': pub_author,
+                'publication_date': pub_date,
+                'chosen_category': chosen_category,
+                'categories': categories,
+                'authenticated': authenticated,
+                'featured_item': featured
+            }
 
             context.update(error)
             return render(request, 'books/pub_add.html', context)
@@ -225,10 +251,12 @@ def publication_add(request):
 
             return redirect('/books/overview/')
 
-    context = {'author': author,
-               'categories': categories,
-               'authenticated': authenticated,
-               'featured': featured}
+    context = {
+        'author': author,
+        'categories': categories,
+        'authenticated': authenticated,
+        'featured_item': featured
+    }
     return render(request, 'books/pub_add.html', context)
 
 
@@ -245,8 +273,10 @@ def publication_delete(request, pub_id):
 
         return redirect('/books/overview/')
 
-    context = {'author': author,
-               'pub': pub,
-               'authenticated': authenticated,
-               'featured': featured}
+    context = {
+        'author': author,
+        'pub': pub,
+        'authenticated': authenticated,
+        'featured_item': featured
+    }
     return render(request, 'books/pub_delete.html', context)
