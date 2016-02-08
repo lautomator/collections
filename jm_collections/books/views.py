@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from books.models import Publication
+from .forms import UploadFileForm
 
 
 def get_queryset():
@@ -222,6 +223,8 @@ def publication_add(request):
         pub_author = request.POST.get("publication_author", '')
         pub_date = request.POST.get("publication_date", '')
         chosen_category = request.POST.get("publication_category", '')
+        file_upload = request.POST.get("publication_upload", '')
+        form = UploadFileForm(request.POST, request.FILES)
 
         error = check_entries(title, pub_author, pub_date)
 
@@ -248,6 +251,9 @@ def publication_add(request):
                               category=get_category_code(chosen_category))
 
             pub.save()
+
+            # upload the image file
+            handle_uploaded_file(request.FILES['file'])
 
             return redirect('/books/overview/')
 
