@@ -1,6 +1,4 @@
-"""
-Django settings for jm_collections project.
-"""
+"""Django settings for jm_collections project."""
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -51,8 +49,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'collections',
-        'USER': 'john',
-        'PASSWORD': 'dev',
+        'USER': 'johnmerigliano',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432'
     }
