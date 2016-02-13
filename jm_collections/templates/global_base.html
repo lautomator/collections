@@ -113,7 +113,11 @@
                 <!-- Side Widget Well -->
                 <div class="well">
                     <h3>Featured</h3>
+                {% if featured_item %}
                     <h4>{% block featured %}<a href="{% url featured_item.site featured_item.q %}">{{ featured_item.title }}</a>{% endblock%}</h4>
+                {% else %}
+                    <h4>Nothing featured</h4>
+                {% endif %}
                 </div>
 
                 {% endblock %}

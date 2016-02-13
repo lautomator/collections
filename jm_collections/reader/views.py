@@ -43,24 +43,25 @@ def get_featured():
     # get the reader entries
     entries = get_queryset_all()
 
-    # get all of the available IDs
-    reader_ids = []
-    for i in entries:
-        reader_ids.append(i.id)
+    if len(entries) != 0:
+        # get all of the available IDs
+        reader_ids = []
+        for i in entries:
+            reader_ids.append(i.id)
 
-    # get 1 random id
-    random_id = random.choice(reader_ids)
+        # get 1 random id
+        random_id = random.choice(reader_ids)
 
-    # get the title from the random entry
-    featured_title = entries.get(id=random_id).reader_title
+        # get the title from the random entry
+        featured_title = entries.get(id=random_id).reader_title
 
-    params = {
-        'title': featured_title,
-        'site': 'reader:details',
-        'q': random_id
-    }
+        params = {
+            'title': featured_title,
+            'site': 'reader:details',
+            'q': random_id
+        }
 
-    return params
+        return params
 
 
 def reader_home(request):

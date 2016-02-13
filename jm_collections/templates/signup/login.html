@@ -5,8 +5,6 @@
 
 {% block page %}
 
-    <p>New users <a href="{% url 'signup:signup' %}">signup</a>.</p>
-
     <!-- the login form -->
     <form method="post">
         {% csrf_token %}

@@ -8,18 +8,22 @@
     <!-- Details from the publication -->
 
     <!-- Render all of the titles from the table -->
-    <table>
-        {% for item in all_items %}
-        <tr>
-            <td class="pub_id">{{ item.id }}</td>
-            <td class="v_rule">&ensp;</td>
-            <td class="pub_item">
-                <a href="{% url 'books:details' item.id %}">{{ item.title }}</a>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3">&nbsp;</td>
-        </tr>
-        {% endfor %}
-    </table>
+    {% if all_items %}
+        <table>
+            {% for item in all_items %}
+            <tr>
+                <td class="pub_id">{{ item.id }}</td>
+                <td class="v_rule">&ensp;</td>
+                <td class="pub_item">
+                    <a href="{% url 'books:details' item.id %}">{{ item.title }}</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>There are no entries.</p>
+    {% endif %}
 {% endblock %}

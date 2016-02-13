@@ -81,24 +81,25 @@ def get_featured():
     # get the book entries
     pubs = get_queryset_all()
 
-    # get all of the available IDs
-    pub_ids = []
-    for i in pubs:
-        pub_ids.append(i.id)
+    if len(pubs) != 0:
+        # get all of the available IDs
+        pub_ids = []
+        for i in pubs:
+            pub_ids.append(i.id)
 
-    # get 1 random id
-    random_id = random.choice(pub_ids)
+        # get 1 random id
+        random_id = random.choice(pub_ids)
 
-    # get the title from the random entry
-    featured_title = pubs.get(id=random_id).title
+        # get the title from the random entry
+        featured_title = pubs.get(id=random_id).title
 
-    params = {
-        'title': featured_title,
-        'site': 'books:details',
-        'q': random_id
-    }
+        params = {
+            'title': featured_title,
+            'site': 'books:details',
+            'q': random_id
+        }
 
-    return params
+        return params
 
 
 def publications_home(request):
