@@ -1,11 +1,11 @@
 """Django settings for jm_collections project."""
 
-import conflocal
+import dev_config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-SECRET_KEY = conflocal.sk
+SECRET_KEY = dev_config.sk
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -49,8 +49,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'collections',
-        'USER': conflocal.usr,
-        'PASSWORD': conflocal.pwd,
+        'USER': dev_config.usr,
+        'PASSWORD': dev_config.pwd,
         'HOST': 'localhost',
         'PORT': '5432'
     }
