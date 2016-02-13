@@ -22,8 +22,10 @@
     {% endfor %}
 
     {% else %}
-    <p>There are no entries.</p>
-    <p><a href="{% url 'reader:add' %}">add an entry</a></p>
+        <p>There are no entries.</p>
+        {% if authenticated %}
+            <p><a href="{% url 'reader:add' %}">add an entry</a></p>
+        {% endif %}
     {% endif %}
 
 {% endblock %}
