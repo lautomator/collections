@@ -9,9 +9,9 @@ They are:
 
 ###Local Setup
 To get this going:
-* Install Postgres and create a database called 'collections'
+* Install [Postgres](http://www.postgresql.org/) and create a database called 'collections'
 * Adjust Django settings, accordingly (see **configuration**, below)
-* Install virtualenv and install the requirements:
+* Install [virtualenv](http://docs.python-guide.org/en/latest/dev/virtualenvs/) and install the requirements:
 
 `virtualenv env`
 `source env/bin/activate`
