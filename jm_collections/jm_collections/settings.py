@@ -69,8 +69,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-    '~/Documents/Programming/python/django-projs/jm_collections/static/',
+    os.path.join(BASE_DIR, "static")
 )
 
 STATIC_URL = os.path.join(BASE_DIR, 'static/')
