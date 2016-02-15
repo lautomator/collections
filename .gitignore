@@ -2,4 +2,5 @@
 *.pyc
 env/
 dev_config.py
+prod_config.py
 
