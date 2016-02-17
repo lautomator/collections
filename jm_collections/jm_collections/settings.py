@@ -1,11 +1,11 @@
 """Django settings for jm_collections project."""
 
-import dev_config
+import collections_conf
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-SECRET_KEY = dev_config.sk
+SECRET_KEY = collections_conf.sk
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -48,9 +48,9 @@ WSGI_APPLICATION = 'jm_collections.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'collections',
-        'USER': dev_config.usr,
-        'PASSWORD': dev_config.pwd,
+        'NAME': collections_conf.db_name,
+        'USER': collections_conf.db_user,
+        'PASSWORD': collections_conf.db_pw,
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -68,10 +68,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-    '~/Documents/Programming/python/django-projs/jm_collections/static/',
-)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 STATIC_URL = os.path.join(BASE_DIR, 'static/')
 
